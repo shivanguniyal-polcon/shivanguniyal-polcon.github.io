@@ -13,6 +13,7 @@ paginate = 10
   colorScheme = "auto"
   hidecolorschemetoggle = false
   customCSS = ["css/custom.css"]
+  favicon = "favicon.png"
 
 [[params.social]]
   name = "Github"
