@@ -1,6 +1,6 @@
 baseURL = "https://shivanguniyal-polcon.github.io/"
 languageCode = "en-us"
-title = "Shivang Uniyal | Polcon"
+title = "Shivang Uniyal"
 theme = "hugo-coder"
 paginate = 10
 
@@ -9,6 +9,7 @@ paginate = 10
   info = ["Policy Consultant", "Data & Tech Strategist"] # Feel free to edit this!
   description = "Shivang Uniyal's personal portfolio and policy consulting hub."
   keywords = "policy,consultant,political,data,portfolio"
+  customCSS = ["css/custom.css"]
   
   # This tells the theme where your photo will be
   avatarURL = "/images/avatar.jpg"
