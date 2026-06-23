@@ -6,7 +6,7 @@ paginate = 10
 
 [params]
   author = "Shivang Uniyal"
-  info = ["Policy Consultant", "Data & Tech Strategist"]
+  info = ["Policy Consultant", "Political Planner"]
   description = "Shivang Uniyal's personal portfolio and policy consulting hub."
   keywords = "policy,consultant,political,data,portfolio"
   avatarURL = "/images/avatar.jpg"
