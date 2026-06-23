@@ -26,6 +26,12 @@ paginate = 10
   weight = 2
   url = "https://www.linkedin.com/in/shivang-uniyal/"
 
+  [[params.social]]
+  name = "Instagram"
+  icon = "fa-brands fa-instagram fa-2x"
+  weight = 3
+  url = "https://www.instagram.com/shiv._.vang?igsh=d3EzZjF0d3g5aDdo"
+
 [[menu.main]]
   name = "About"
   weight = 1
