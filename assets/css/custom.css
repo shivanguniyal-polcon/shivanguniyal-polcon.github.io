@@ -1,18 +1,28 @@
-/* Justify paragraphs and lists */
-.content p, .content li, article {
-    text-align: justify;
-    text-justify: inter-word;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    hyphens: auto;
-}
-pre, code, h1, h2, h3, h4, h5, h6, table, .highlight {
-    text-align: left !important;
-    hyphens: none;
-}
-/* Pure CSS Data Grid Watermark */
-body {
-    background-image: radial-gradient(rgba(128, 128, 128, 0.15) 1px, transparent 1px);
-    background-size: 25px 25px;
-    background-attachment: fixed;
-}
+<style>
+  /* CENTER THE HOMEPAGE PROFILE (Author Name & Info) */
+  h1, h2, .info, .author {
+      text-align: center !important;
+      hyphens: none !important;
+  }
+
+  /* Justify any other paragraphs you might add to the home page later */
+  .content p, .content li, article {
+      text-align: justify;
+      text-justify: inter-word;
+      -webkit-hyphens: auto;
+      hyphens: auto;
+  }
+  
+  /* Keep code and lower-level headers left-aligned */
+  pre, code, h3, h4, h5, h6, table, .highlight {
+      text-align: left !important;
+      hyphens: none;
+  }
+  
+  /* The Data Grid Watermark */
+  body {
+      background-image: radial-gradient(rgba(128, 128, 128, 0.15) 1px, transparent 1px);
+      background-size: 25px 25px;
+      background-attachment: fixed;
+  }
+</style>
