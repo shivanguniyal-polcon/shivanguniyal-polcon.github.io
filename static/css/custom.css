@@ -1,0 +1,16 @@
+/* Justify paragraphs and lists for a formal policy-brief look */
+.content p, 
+.content li, 
+article {
+    text-align: justify;
+    text-justify: inter-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+/* Ensure code blocks, headings, and tables stay left-aligned for readability */
+pre, code, h1, h2, h3, h4, h5, h6, table, .highlight {
+    text-align: left !important;
+    hyphens: none;
+}
