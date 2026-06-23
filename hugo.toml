@@ -1,0 +1,40 @@
+baseURL = "https://shivanguniyal-polcon.github.io/"
+languageCode = "en-us"
+title = "Shivang Uniyal | Polcon"
+theme = "hugo-coder"
+paginate = 10
+
+[params]
+  author = "Shivang Uniyal"
+  info = ["Policy Consultant", "Data & Tech Strategist"] # Feel free to edit this!
+  description = "Shivang Uniyal's personal portfolio and policy consulting hub."
+  keywords = "policy,consultant,political,data,portfolio"
+  
+  # This tells the theme where your photo will be
+  avatarURL = "/images/avatar.jpg"
+  
+  # Dark mode / Light mode settings
+  colorScheme = "auto"
+  hidecolorschemetoggle = false
+
+# Social Links (You can edit the URLs later if they are different)
+[[params.social]]
+  name = "Github"
+  icon = "fa-brands fa-github fa-2x"
+  weight = 1
+  url = "https://github.com/shivanguniyal-polcon/"
+[[params.social]]
+  name = "LinkedIn"
+  icon = "fa-brands fa-linkedin fa-2x"
+  weight = 2
+  url = "https://www.linkedin.com/in/shivanguniyal-polcon/"
+
+# Navigation Menu at the top of the site
+[[menu.main]]
+  name = "About"
+  weight = 1
+  url = "about/"
+[[menu.main]]
+  name = "Projects"
+  weight = 2
+  url = "projects/"
