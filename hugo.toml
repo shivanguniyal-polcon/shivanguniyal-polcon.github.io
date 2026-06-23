@@ -38,3 +38,7 @@ paginate = 10
   name = "Projects"
   weight = 2
   url = "projects/"
+[[menu.main]]
+  name = "Still Learning"
+  weight = 3
+  url = "learning/"
