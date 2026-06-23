@@ -1,6 +1,6 @@
 baseURL = "https://shivanguniyal-polcon.github.io/"
 languageCode = "en-us"
-title = "Shivang Uniyal"
+title = "Shivang Uniyal | Public Policy, Governance & Political Analysis"
 theme = "hugo-coder"
 paginate = 10
 
