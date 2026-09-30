@@ -82,6 +82,11 @@ export default function ProjectGrid({
                 <span>
                   <span className={`status-dot status-${p.status}`} />
                   {statusLabel[p.status]} · {p.year}
+                  {(p.links?.length ?? 0) > 0 && (
+                    <span className="faint" style={{ marginLeft: 8, fontSize: 11 }}>
+                      · {p.links!.map((l) => (l.kind === 'dashboard' ? 'dashboard' : l.kind === 'publication' ? 'paper' : 'code')).join(' + ')} ↗
+                    </span>
+                  )}
                 </span>
                 <span className="arrow">→</span>
               </div>

@@ -12,6 +12,7 @@ export type Domain =
 export type MethodStep = { step: string; detail: string };
 export type SourceRef = { name: string; role: string };
 export type StatRow = { label: string; value: string; note?: string };
+export type ProjectLink = { kind: 'dashboard' | 'publication' | 'code'; url: string; label?: string };
 
 export type Project = {
   slug: string;
@@ -22,6 +23,8 @@ export type Project = {
   year: string;
   status: 'live' | 'ongoing' | 'published';
   link?: string;
+  /** public-facing artifacts: live dashboards, published papers, code repos */
+  links?: ProjectLink[];
   featured?: boolean;
   heroStat?: { value: string; label: string };
   chart?: 'pmjay' | 'pmjayCal' | 'evm' | 'evmEvent' | 'minerals' | 'wefe' | 'drone' | 'wefeScenarios' | 'taxonomy';
@@ -55,6 +58,9 @@ export const projects: Project[] = [
     year: '2024 to 2025',
     status: 'live',
     link: 'https://shivang-thesis.streamlit.app/',
+    links: [
+      { kind: 'dashboard', url: 'https://shivang-thesis.streamlit.app/', label: 'EVM × gender turnout dashboard' },
+    ],
     featured: true,
     heroStat: { value: '−7.4 pp', label: 'EC98 × EVM gradient on male turnout change (p_cl = 0.004, RI = 0.005)' },
     chart: 'evmEvent',
@@ -208,6 +214,9 @@ export const projects: Project[] = [
     methods: ['XGBoost + SHAP', 'Temporal Block CV', 'Inverse Probability Weighting', 'Monte Carlo VaR', 'Actuarial Sizing'],
     year: '2025 to 2026',
     status: 'published',
+    links: [
+      { kind: 'publication', url: 'https://indiafoundation.in/wp-content/uploads/2026/07/Issue-Brief-13-Shivang-Uniyal-rev.pdf', label: 'Issue Brief No. 13, India Foundation (PDF)' },
+    ],
     featured: true,
     heroStat: { value: 'AUC 0.855', label: 'out-of-distribution test AUC after IPW covariate-shift correction; recall 0.989 on critical disruptions' },
     chart: 'minerals',
@@ -282,6 +291,9 @@ export const projects: Project[] = [
     methods: ['Difference-GMM', 'Block-Bootstrap Monte Carlo', 'VIIRS Night Lights', 'Scenario Engine', 'Threshold Dating'],
     year: '2025 to 2026',
     status: 'ongoing',
+    links: [
+      { kind: 'dashboard', url: 'https://water-security.vercel.app/', label: 'WEFE groundwater dashboard' },
+    ],
     featured: true,
     heroStat: { value: '2029', label: 'projected handpump-failure year under unchecked growth (SSP5-8.5); 2043 under SSP2; averted under NPP' },
     chart: 'wefeScenarios',
@@ -360,6 +372,9 @@ export const projects: Project[] = [
     methods: ['BGE-M3 Embeddings', 'BERTopic + UMAP + HDBSCAN', 'Jensen-Shannon Divergence', 'Fractional Logit GLM', 'Calendar FE Audit'],
     year: '2024 to 2025',
     status: 'ongoing',
+    links: [
+      { kind: 'dashboard', url: 'https://bharat-media-pulse.vercel.app/', label: 'Bharat Media Pulse: 426,000-article media monitor' },
+    ],
     heroStat: { value: 'ΔJSD −0.017', label: 'agenda convergence after MCC enforcement (p = 0.011); Hindi welfare coverage −2.6 pp' },
     sections: [
       {
@@ -416,6 +431,9 @@ export const projects: Project[] = [
     methods: ['LLM Classification (temp 0)', '17-Category Taxonomy', 'Manual Gold-Set Audit', 'Cross-Party Comparison'],
     year: '2024',
     status: 'published',
+    links: [
+      { kind: 'code', url: 'https://github.com/shivanguniyal-polcon/manifesto-analysis', label: 'pipeline + data on GitHub' },
+    ],
     chart: 'taxonomy',
     heroStat: { value: '6 manifestos', label: 'BJP and INC, 2014 to 2024, every promise one primary domain' },
     sections: [
@@ -664,6 +682,9 @@ export const projects: Project[] = [
     methods: ['Sentence Embeddings', 'PERMANOVA', 'Bootstrap CIs', 'Permutation-Validated Classification'],
     year: '2024 to 2025',
     status: 'live',
+    links: [
+      { kind: 'dashboard', url: 'https://pmspeechesdashboard-1.vercel.app/', label: 'PM speeches dashboard' },
+    ],
     heroStat: { value: '4.5× above chance', label: 'linear classifier recovers the speaker; PERMANOVA rejects interchangeability, p ≤ 0.001 at 4,999 permutations' },
     sections: [
       {

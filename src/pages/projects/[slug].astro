@@ -9,6 +9,15 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+
+/* public-facing artifacts for this project: live dashboards, publications,
+   code. Falls back to the legacy single link field so nothing is dropped. */
+const artifacts = [
+  ...(project.links ?? []),
+  ...(project.link && project.link.startsWith('http') && !(project.links ?? []).some((l) => l.url === project.link)
+    ? [{ kind: 'dashboard' as const, url: project.link }]
+    : []),
+];
 ---
 
 <BaseLayout title={`${project.title} · Shivang Uniyal`} description={project.tagline}>
@@ -27,10 +36,23 @@ const { project } = Astro.props;
       <div class="mono faint" style="margin-top:18px; font-size:12.5px">
         <span class={`status-dot status-${project.status}`}></span>
         {project.status} · {project.year}
-        {project.link && project.link.startsWith('http') && (
-          <> · <a href={project.link} target="_blank" rel="noopener">open live artifact ↗</a></>
-        )}
       </div>
+
+      {artifacts.length > 0 && (
+        <div class="artifact-row" style="margin-top:14px">
+          {artifacts.map((a) => (
+            <a
+              class={`artifact-link artifact-${a.kind}`}
+              href={a.url}
+              target="_blank"
+              rel="noopener"
+            >
+              <span class="artifact-kind">{a.kind === 'dashboard' ? 'live dashboard' : a.kind === 'publication' ? 'publication' : 'code'}</span>
+              <span class="artifact-label">{a.label ?? (a.kind === 'dashboard' ? 'open dashboard' : a.kind === 'publication' ? 'read the paper' : 'view repository')} ↗</span>
+            </a>
+          ))}
+        </div>
+      )}
 
       {project.heroStat && (
         <div class="card" style="padding:22px 26px; margin-top:28px; display:flex; align-items:baseline; gap:18px; flex-wrap:wrap">
