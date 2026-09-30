@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About · Shivang Uniyal" description="Policy engineer and governance consultant. Data science, electioneering strategy, and legislative public policy.">
+  <section style="padding-top:80px">
+    <div class="wrap">
+      <div style="display:grid; grid-template-columns:auto 1fr; gap:48px; align-items:center" id="about-head">
+        <div class="reveal">
+          <img
+            src="/images/avatar.jpg"
+            alt="Shivang Uniyal"
+            style="width:170px; height:170px; border-radius:50%; object-fit:cover; border:2px solid var(--line-bright); box-shadow:0 0 0 6px var(--bg-raised), 0 18px 50px rgba(0,0,0,0.5)"
+          />
+        </div>
+        <div class="reveal" style="--reveal-delay:0.1s">
+          <div class="kicker">whoami</div>
+          <h1 style="font-size:clamp(34px,4.6vw,50px)">Shivang Uniyal</h1>
+          <p class="lede" style="margin-top:12px; font-size:18px">
+            Policy engineer and governance consultant, currently an MPP candidate at
+            <strong style="color:var(--ink)">IIT Delhi</strong>, previously a LAMP Fellow at PRS
+            and an electioneering consultant on a national campaign. I build the data machinery
+            underneath policy arguments.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:30px">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">professional experience</div>
+        <div class="grid-3">
+          <div class="card" style="padding:24px">
+            <div class="mono" style="font-size:11px; color:var(--accent)">2022 to 2023</div>
+            <h3 style="margin:8px 0 6px; font-size:19px">Governance and Electioneering Consultant</h3>
+            <div class="dim" style="font-size:13.5px">Nation with NaMo</div>
+            <p class="dim" style="font-size:14px; margin-top:10px">
+              Political strategy, data driven campaign analytics, and regional political intelligence reporting.
+            </p>
+          </div>
+          <div class="card" style="padding:24px">
+            <div class="mono" style="font-size:11px; color:var(--accent)">2021 to 2022</div>
+            <h3 style="margin:8px 0 6px; font-size:19px">LAMP Fellow</h3>
+            <div class="dim" style="font-size:13.5px">PRS Legislative Research</div>
+            <p class="dim" style="font-size:14px; margin-top:10px">
+              Legislative assistant to a Member of Parliament. Data analytics, legislative frameworks,
+              and parliamentary questions for the NCR region.
+            </p>
+          </div>
+          <div class="card" style="padding:24px">
+            <div class="mono" style="font-size:11px; color:var(--accent)">2020</div>
+            <h3 style="margin:8px 0 6px; font-size:19px">Research Assistant</h3>
+            <div class="dim" style="font-size:13.5px">Government of Gujarat</div>
+            <p class="dim" style="font-size:14px; margin-top:10px">
+              Field research under the Vrundavan Gram Yojana in Surendranagar, evaluating rural
+              development and grassroots governance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top:56px">
+        <div class="kicker">toolkit</div>
+        <div class="terminal" style="max-width:720px">
+          <div class="terminal-head">
+            <span class="tl" style="background:#ff5f57"></span>
+            <span class="tl" style="background:#febc2e"></span>
+            <span class="tl" style="background:#28c840"></span>
+            <span class="title">skills.yml</span>
+          </div>
+          <div class="terminal-body" style="min-height:0; font-size:13px">
+            <div class="out"><span class="c2">strategy:</span> [electioneering analytics, political intelligence, campaign strategy]</div>
+            <div class="out"><span class="c2">data_science:</span> [python, ML, R, GIS spatial mapping, econometrics]</div>
+            <div class="out"><span class="c2">policy_legal:</span> [legislative research, policy drafting, program evaluation]</div>
+            <div class="out"><span class="c2">currently_leveling_up:</span> [AI agents, open source LLM stacks for governance]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top:56px">
+        <div class="kicker">education</div>
+        <div class="grid-2">
+          <div class="card" style="padding:24px">
+            <h3 style="font-size:19px">Master of Public Policy</h3>
+            <div class="dim" style="font-size:14px; margin-top:6px">IIT Delhi · ongoing</div>
+          </div>
+          <div class="card" style="padding:24px">
+            <h3 style="font-size:19px">B.A. (Hons.), Governance and Public Administration</h3>
+            <div class="dim" style="font-size:14px; margin-top:6px">PDEU · Gold Medalist</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top:56px">
+        <div class="kicker">selected impact</div>
+        <div class="prose wrap-tight" style="padding:0">
+          <p>
+            <strong>Political accountability.</strong> Co-authored A Voter's Guide to Reading a
+            Manifesto with the Vidhi Centre for Legal Policy.
+          </p>
+          <p>
+            <strong>Migration and demographics.</strong> Studied interstate migration patterns during
+            public crises with the Centre for Development Policy and Practice.
+          </p>
+          <p>
+            <strong>Urban governance.</strong> Evaluated public sanitation frameworks across Ahmedabad
+            under the Swachh Bharat Mission for the Ahmedabad Municipal Corporation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @media (max-width: 800px) {
+      #about-head { grid-template-columns: 1fr !important; text-align: center; }
+      #about-head img { margin: 0 auto; }
+    }
+  </style>
+</BaseLayout>
