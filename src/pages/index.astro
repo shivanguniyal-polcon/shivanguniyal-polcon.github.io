@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GardenScene from '../components/GardenScene';
+---
+
+<BaseLayout title="Shivang Uniyal · Policy Engineer">
+  <section class="landing">
+    <div class="landing-scene">
+      <GardenScene client:visible />
+
+      {/* the hero floats on the garden sky: same canvas, one scene */}
+      <div class="landing-hero">
+        <div class="kicker" style="justify-content:center">policy_engineer // portfolio</div>
+        <h1 style="font-size:clamp(22px,2.8vw,32px)">
+          Good intentions, <span style="color:var(--accent); font-style:italic">computed.</span>
+        </h1>
+        <p class="lede" style="margin:6px auto 0; max-width:560px; font-size:14.5px">
+          In the ministry garden, a paper engineer grows a lotus of twelve builds.
+          Click the bud to bloom it, drag to turn it, open a petal to read the evidence.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* One continuous scene: the GardenScene stage fills the whole landing
+       column and the hero copy floats over its sky. Nothing frames it, so
+       the page background (#0a0e12) and the painted sky read as one canvas. */
+    .landing {
+      height: calc(100vh - 62px);
+      min-height: 640px;
+      position: relative;
+    }
+    .landing-scene {
+      position: absolute;
+      inset: 0;
+    }
+    .landing-scene > astro-island,
+    .landing-scene .scene-stage { height: 100%; }
+    .landing-hero {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      /* above the scene's bloom scrim (z 7) so the header stays crisp when
+         the flower opens; below tooltips (z 50) */
+      z-index: 8;
+      text-align: center;
+      padding-top: 34px;
+      pointer-events: none;
+      /* parallax: the script writes --hx/--hy (mouse drift, px) and
+         --sy (scroll drift, px); translate + the faintest counter-tilt make
+         the header float a little behind the sky it sits on */
+      transform: translate3d(var(--hx, 0px), calc(var(--hy, 0px) + var(--sy, 0px)), 0);
+      opacity: calc(1 - var(--sfade, 0));
+      will-change: transform, opacity;
+    }
+    .landing-hero .kicker,
+    .landing-hero h1,
+    .landing-hero .lede {
+      transform: translate3d(calc(var(--hx2, 0px)), 0, 0);
+    }
+    @media (max-width: 720px) {
+      .landing { min-height: 560px; }
+      .landing-hero { padding-top: 22px; }
+    }
+  </style>
+
+  <script>
+    /* dusk + parallax: as the visitor scrolls from the garden into the
+       projects section the sky darkens (--skydim) and the hero drifts up and
+       fades; on fine pointers the hero also drifts a few px against the
+       mouse, so the header feels laid onto the scene, not pasted over it. */
+    const stage = () => document.querySelector('.scene-stage');
+    const hero = () => document.querySelector('.landing-hero');
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+    let mx = 0, my = 0; // mouse target in -1..1
+    let cx = 0, cy = 0; // eased mouse
+    let raf = 0;
+
+    const apply = () => {
+      raf = 0;
+      const st = stage();
+      const h = hero();
+      if (!st || !h) return;
+
+      // scroll: 0 at top, 1 at the bottom of the page (footer in view), so the
+      // garden is at full dusk exactly when the projects/footer region takes over
+      const range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const sy = clamp(window.scrollY / range, 0, 1);
+      st.style.setProperty('--skydim', sy.toFixed(3));
+      h.style.setProperty('--sy', `${(-34 * sy).toFixed(1)}px`);
+      h.style.setProperty('--sfade', sy.toFixed(3));
+
+      // mouse: hero leans a few px away from the cursor, inner lines less
+      cx += (mx - cx) * 0.08;
+      cy += (my - cy) * 0.08;
+      h.style.setProperty('--hx', `${(cx * 7).toFixed(2)}px`);
+      h.style.setProperty('--hy', `${(cy * 4).toFixed(2)}px`);
+      h.style.setProperty('--hx2', `${(cx * 3.5).toFixed(2)}px`);
+    };
+
+    const schedule = () => { if (!raf) raf = requestAnimationFrame(apply); };
+
+    const onScroll = () => { if (!reduced) schedule(); };
+    const onMouse = (e: MouseEvent) => {
+      if (reduced || !fine) return;
+      mx = (e.clientX / window.innerWidth) * 2 - 1;
+      my = (e.clientY / window.innerHeight) * 2 - 1;
+      schedule();
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (fine) window.addEventListener('mousemove', onMouse, { passive: true });
+    apply();
+  </script>
+</BaseLayout>
