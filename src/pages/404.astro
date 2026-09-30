@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 · Shivang Uniyal" description="Page not found.">
+  <section class="grid-bg" style="padding-top:120px; padding-bottom:140px">
+    <div class="wrap-tight" style="text-align:center">
+      <div class="kicker" style="justify-content:center">error 404</div>
+      <div class="terminal" style="max-width:520px; margin:0 auto; text-align:left">
+        <div class="terminal-head">
+          <span class="tl" style="background:#ff5f57"></span>
+          <span class="tl" style="background:#febc2e"></span>
+          <span class="tl" style="background:#28c840"></span>
+          <span class="title">shivang@policy-engine · zsh</span>
+        </div>
+        <div class="terminal-body">
+          <div class="cmd"><span class="prompt">➜</span>open {Astro.url.pathname}</div>
+          <div class="out">no such file or directory: {Astro.url.pathname}</div>
+          <div class="out">did you mean <span class="hl">/projects/</span>?</div>
+          <div class="cmd" style="margin-top:12px"><span class="prompt">➜</span>cd /<span class="cursor"></span></div>
+        </div>
+      </div>
+      <div style="margin-top:30px">
+        <a class="btn primary" href="/">← back to index</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
