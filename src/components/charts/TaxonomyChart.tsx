@@ -61,7 +61,7 @@ export default function TaxonomyChart() {
             className="mono"
             style={{
               fontSize: 11.5, lineHeight: 1.7, padding: '12px 14px', borderRadius: 8,
-              background: '#0d1117', border: '1px solid var(--line-bright)', color: 'var(--ink-dim)',
+              background: 'var(--code-bg)', border: '1px solid var(--line-bright)', color: 'var(--ink-dim)',
               whiteSpace: 'pre-wrap',
             }}
           >

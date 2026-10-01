@@ -42,15 +42,15 @@ function TooltipBox({ active, payload, label }: any) {
   return (
     <div
       style={{
-        background: '#0d1117', border: '1px solid #2d3a47', borderRadius: 8,
+        background: 'var(--code-bg)', border: '1px solid var(--line-bright)', borderRadius: 8,
         padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
-        color: '#e8edf2',
+        color: 'var(--ink)',
       }}
     >
-      <div style={{ color: '#5c6b7a' }}>{label}</div>
-      <div style={{ color: '#4ade80', fontWeight: 600 }}>{fmt(payload[0].value)}</div>
+      <div style={{ color: 'var(--ink-faint)' }}>{label}</div>
+      <div style={{ color: 'var(--accent)', fontWeight: 600 }}>{fmt(payload[0].value)}</div>
       {payload[0].payload?.state && (
-        <div style={{ color: '#9aa7b4' }}>{payload[0].payload.state}</div>
+        <div style={{ color: 'var(--ink-dim)' }}>{payload[0].payload.state}</div>
       )}
     </div>
   );
@@ -90,41 +90,41 @@ export default function PMJAYChart() {
             <AreaChart data={series} margin={{ top: 10, right: 8, left: -18, bottom: 0 }}>
               <defs>
                 <linearGradient id="pmjayFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#4ade80" stopOpacity={0.35} />
-                  <stop offset="100%" stopColor="#4ade80" stopOpacity={0.02} />
+                  <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.35} />
+                  <stop offset="100%" stopColor="var(--accent)" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" vertical={false} />
               <XAxis
                 dataKey="date"
-                stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
-                tickLine={false} axisLine={{ stroke: '#1f2933' }}
+                stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+                tickLine={false} axisLine={{ stroke: 'var(--line)' }}
               />
               <YAxis
-                stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+                stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
                 tickLine={false} axisLine={false} tickFormatter={(v: number) => `${v}cr`}
               />
               <Tooltip content={<TooltipBox />} />
               <Area
-                type="monotone" dataKey="value" stroke="#4ade80" strokeWidth={2.2}
+                type="monotone" dataKey="value" stroke="var(--accent)" strokeWidth={2.2}
                 fill="url(#pmjayFill)" animationDuration={1400}
-                dot={{ r: 2.5, fill: '#4ade80', strokeWidth: 0 }}
+                dot={{ r: 2.5, fill: 'var(--accent)', strokeWidth: 0 }}
                 activeDot={{ r: 5 }}
               />
             </AreaChart>
           ) : (
             <BarChart data={topStates} layout="vertical" margin={{ top: 4, right: 30, left: 40, bottom: 0 }}>
-              <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" horizontal={false} />
+              <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" horizontal={false} />
               <XAxis type="number" hide />
               <YAxis
                 type="category" dataKey="state" width={132}
-                stroke="#5c6b7a" tick={{ fill: '#9aa7b4', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+                stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-dim)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
                 tickLine={false} axisLine={false}
               />
-              <Tooltip content={<TooltipBox />} cursor={{ fill: '#18212b55' }} />
+              <Tooltip content={<TooltipBox />} cursor={{ fill: 'var(--chart-cursor)' }} />
               <Bar dataKey="admissions" animationDuration={1100} radius={[0, 3, 3, 0]}>
                 {topStates.map((s, i) => (
-                  <Cell key={s.state} fill={i === 0 ? '#38bdf8' : '#4ade80'} fillOpacity={1 - i * 0.06} />
+                  <Cell key={s.state} fill={i === 0 ? 'var(--cyan)' : 'var(--accent)'} fillOpacity={1 - i * 0.06} />
                 ))}
               </Bar>
             </BarChart>

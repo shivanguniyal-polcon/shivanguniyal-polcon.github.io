@@ -26,9 +26,9 @@ const SHORT: Record<string, string> = {
 };
 
 const THRESHOLDS = [
-  { depth: 15, label: '15 m: handpumps fail', color: '#f87171' },
-  { depth: 25, label: '25 m: diesel unviable', color: '#fbbf24' },
-  { depth: 40, label: '40 m: aquifer stress', color: '#a78bfa' },
+  { depth: 15, label: '15 m: handpumps fail', color: 'var(--red)' },
+  { depth: 25, label: '25 m: diesel unviable', color: 'var(--amber)' },
+  { depth: 40, label: '40 m: aquifer stress', color: 'var(--violet)' },
 ];
 
 export default function WEFEScenarios() {

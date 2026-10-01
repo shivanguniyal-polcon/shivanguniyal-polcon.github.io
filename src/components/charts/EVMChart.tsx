@@ -46,13 +46,13 @@ function TooltipBox({ active, payload, label }: any) {
   return (
     <div
       style={{
-        background: '#0d1117', border: '1px solid #2d3a47', borderRadius: 8,
-        padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12, color: '#e8edf2',
+        background: 'var(--code-bg)', border: '1px solid var(--line-bright)', borderRadius: 8,
+        padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12, color: 'var(--ink)',
       }}
     >
-      <div style={{ color: '#5c6b7a' }}>{label}</div>
+      <div style={{ color: 'var(--ink-faint)' }}>{label}</div>
       {payload.map((p: any, i: number) => (
-        <div key={i} style={{ color: p.stroke || p.fill || '#4ade80' }}>
+        <div key={i} style={{ color: p.stroke || p.fill || 'var(--accent)' }}>
           β = {typeof p.value === 'number' ? p.value.toFixed(2) : p.value} {p.dataKey === 't' ? '(t-stat)' : ''}
         </div>
       ))}
@@ -93,44 +93,44 @@ export default function EVMChart() {
         <ResponsiveContainer>
           {view === 'loo' ? (
             <LineChart data={loo} margin={{ top: 10, right: 12, left: -12, bottom: 6 }}>
-              <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" vertical={false} />
               <XAxis
                 dataKey="dropped" interval={3} angle={-40} textAnchor="end" height={58}
-                stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 9.5, fontFamily: 'JetBrains Mono' }}
-                tickLine={false} axisLine={{ stroke: '#1f2933' }}
+                stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 9.5, fontFamily: 'JetBrains Mono' }}
+                tickLine={false} axisLine={{ stroke: 'var(--line)' }}
               />
               <YAxis
-                stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+                stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
                 tickLine={false} axisLine={false}
                 domain={['dataMin - 0.6', 'dataMax + 0.6']}
                 tickFormatter={(v: number) => v.toFixed(0)}
               />
               <Tooltip content={<TooltipBox />} />
-              <ReferenceLine y={0} stroke="#5c6b7a" strokeDasharray="4 4" />
+              <ReferenceLine y={0} stroke="var(--ink-faint)" strokeDasharray="4 4" />
               <Line
-                type="monotone" dataKey="b" stroke="#38bdf8" strokeWidth={2}
-                dot={{ r: 3, fill: '#38bdf8', strokeWidth: 0 }} animationDuration={1200}
+                type="monotone" dataKey="b" stroke="var(--cyan)" strokeWidth={2}
+                dot={{ r: 3, fill: 'var(--cyan)', strokeWidth: 0 }} animationDuration={1200}
               />
             </LineChart>
           ) : (
             <BarChart data={placebo} layout="vertical" margin={{ top: 8, right: 60, left: 8, bottom: 0 }}>
-              <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" horizontal={false} />
+              <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" horizontal={false} />
               <XAxis type="number" hide domain={['dataMin - 1', 'dataMax + 1']} />
               <YAxis
                 type="category" dataKey="cell" width={210} tickFormatter={shortCell}
-                stroke="#5c6b7a" tick={{ fill: '#9aa7b4', fontSize: 10, fontFamily: 'JetBrains Mono' }}
+                stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-dim)', fontSize: 10, fontFamily: 'JetBrains Mono' }}
                 tickLine={false} axisLine={false}
               />
-              <Tooltip content={<TooltipBox />} cursor={{ fill: '#18212b55' }} />
-              <ReferenceLine x={0} stroke="#5c6b7a" />
+              <Tooltip content={<TooltipBox />} cursor={{ fill: 'var(--chart-cursor)' }} />
+              <ReferenceLine x={0} stroke="var(--ink-faint)" />
               <Bar dataKey="b" animationDuration={1100} radius={[0, 3, 3, 0]}>
                 {placebo.map((r) => (
-                  <Cell key={r.cell} fill={r.p < 0.05 ? '#4ade80' : '#f87171'} />
+                  <Cell key={r.cell} fill={r.p < 0.05 ? 'var(--accent)' : 'var(--red)'} />
                 ))}
                 <LabelList
                   dataKey="p" position="right"
                   formatter={(v: number) => `p=${v}`}
-                  style={{ fill: '#9aa7b4', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+                  style={{ fill: 'var(--ink-dim)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
                 />
               </Bar>
             </BarChart>

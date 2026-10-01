@@ -1,0 +1,63 @@
+{
+  "_comment": "Brainstorm bench. Add a card by appending an object: tag, color (hex), problem and build accept inline markdown (backticks, bold, links), status is 'seed' | 'sprouting' | 'build', proof is a project slug or null, and null fields render as empty dashed slots.",
+  "cards": [
+    {
+      "tag": "service delivery",
+      "color": "#4ade80",
+      "status": "build",
+      "problem": "Why do citizens drop out of a scheme **they are entitled to**?",
+      "build": "Entitlement funnel model: application, verification, sanction, payout, and grievance as one measured pipeline with the leak points named.",
+      "proof": "pmjay-system-dynamics"
+    },
+    {
+      "tag": "legal code",
+      "color": "#38bdf8",
+      "status": "sprouting",
+      "problem": "What does a rulebook look like when it is `versioned like software`?",
+      "build": "A rule corpus with diffs, changelogs, and impact annotations, so an amendment can be reviewed like a pull request before it goes live.",
+      "proof": "manifesto-analysis"
+    },
+    {
+      "tag": "crisis response",
+      "color": "#fbbf24",
+      "status": "build",
+      "problem": "How should a policy behave when it is under **load it was never designed for**?",
+      "build": "Stress-test sandboxes: run the policy against synthetic scarcity, surge, and misuse scenarios before the real crisis arrives.",
+      "proof": "combat-drones-sd"
+    },
+    {
+      "tag": "speech to action",
+      "color": "#a78bfa",
+      "status": "build",
+      "problem": "How much of what is announced becomes an implemented system?",
+      "build": "Announcement tracking: parse promises, match them to budget lines and outcomes, and score the conversion rate.",
+      "proof": "pm-speeches-dashboard"
+    },
+    {
+      "tag": "local data",
+      "color": "#f472b6",
+      "status": "build",
+      "problem": "Why can two districts with the same scheme report opposite realities?",
+      "build": "Spatial crosswalks that make district-level data comparable across changing boundaries and reporting standards.",
+      "proof": "spatial-crosswalk"
+    },
+    {
+      "tag": "green finance",
+      "color": "#4ade80",
+      "status": "sprouting",
+      "problem": "When does a subsidy actually change behavior instead of buying the same behavior twice?",
+      "build": "Counterfactual pricing models that value the incentive against what would have happened anyway.",
+      "proof": "green-bond-npv"
+    },
+    {
+      "tag": "institutional memory",
+      "color": "#38bdf8",
+      "status": "seed",
+      "problem": "Why does every new ministry rebuild the same analysis from scratch?",
+      "build": "A reusable methods library: datasets, cleaning steps, and model designs documented well enough for the next team to pick up in a day.",
+      "proof": null
+    },
+    null,
+    null
+  ]
+}

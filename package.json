@@ -16,6 +16,7 @@
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.5",
     "framer-motion": "^13.4.5",
+    "marked": "^18.0.14",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "recharts": "^3.10.1"

@@ -66,7 +66,7 @@ export default function GlowCursor() {
         ref={trailRef}
         style={{
           position: 'fixed', top: 0, left: 0, width: 26, height: 26, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(74,222,128,0.22) 0%, rgba(74,222,128,0) 70%)',
+          background: 'radial-gradient(circle, var(--accent-dim) 0%, transparent 70%)',
           filter: 'blur(2px)',
         }}
       />
@@ -75,8 +75,8 @@ export default function GlowCursor() {
         ref={dotRef}
         style={{
           position: 'fixed', top: 0, left: 0, width: 7, height: 7, borderRadius: '50%',
-          background: '#4ade80',
-          boxShadow: '0 0 10px #4ade80, 0 0 22px rgba(74,222,128,0.55)',
+          background: 'var(--accent)',
+          boxShadow: '0 0 10px var(--accent), 0 0 22px var(--accent-dim)',
         }}
       />
       {/* corner brackets over interactive targets */}
@@ -85,7 +85,7 @@ export default function GlowCursor() {
         style={{
           position: 'fixed', top: 0, left: 0, width: 34, height: 34,
           opacity: 0, transition: 'opacity 0.15s ease',
-          color: '#38bdf8',
+          color: 'var(--cyan)',
         }}
       >
         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" style={{ filter: 'drop-shadow(0 0 5px rgba(56,189,248,0.7))' }}>

@@ -94,25 +94,25 @@ export default function WEFEFunnel() {
       <div style={{ width: '100%', height: 320 }}>
         <ResponsiveContainer>
           <LineChart data={data} margin={{ top: 10, right: 14, left: -10, bottom: 4 }}>
-            <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="year" domain={[2025, 2050]} type="number" tickCount={6}
-              stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
-              tickLine={false} axisLine={{ stroke: '#1f2933' }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+              tickLine={false} axisLine={{ stroke: 'var(--line)' }}
             />
             <YAxis
-              stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
               tickLine={false} axisLine={false} domain={[0, 40]}
-              label={{ value: 'depth to water table (m)', angle: -90, position: 'insideLeft', fill: '#5c6b7a', fontSize: 11 }}
+              label={{ value: 'depth to water table (m)', angle: -90, position: 'insideLeft', fill: 'var(--ink-faint)', fontSize: 11 }}
             />
             <Tooltip
               content={({ active, payload, label }: any) =>
                 active && payload?.length ? (
                   <div style={{
-                    background: '#0d1117', border: '1px solid #2d3a47', borderRadius: 8,
+                    background: 'var(--code-bg)', border: '1px solid var(--line-bright)', borderRadius: 8,
                     padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
                   }}>
-                    <div style={{ color: '#5c6b7a' }}>{label}</div>
+                    <div style={{ color: 'var(--ink-faint)' }}>{label}</div>
                     {payload.map((p: any) => (
                       <div key={p.dataKey} style={{ color: p.stroke }}>
                         {p.dataKey}: {Number(p.value).toFixed(1)} m
@@ -122,20 +122,20 @@ export default function WEFEFunnel() {
                 ) : null
               }
             />
-            <ReferenceLine y={15} stroke="#fbbf24" strokeDasharray="6 4" label={{
-              value: '15 m · handpump failure', fill: '#fbbf24', fontSize: 10.5, position: 'insideTopLeft', fontFamily: 'JetBrains Mono',
+            <ReferenceLine y={15} stroke="var(--amber)" strokeDasharray="6 4" label={{
+              value: '15 m · handpump failure', fill: 'var(--amber)', fontSize: 10.5, position: 'insideTopLeft', fontFamily: 'JetBrains Mono',
             }} />
-            <ReferenceLine y={25} stroke="#f87171" strokeDasharray="6 4" label={{
-              value: '25 m · diesel-pump exclusion', fill: '#f87171', fontSize: 10.5, position: 'insideTopLeft', fontFamily: 'JetBrains Mono',
+            <ReferenceLine y={25} stroke="var(--red)" strokeDasharray="6 4" label={{
+              value: '25 m · diesel-pump exclusion', fill: 'var(--red)', fontSize: 10.5, position: 'insideTopLeft', fontFamily: 'JetBrains Mono',
             }} />
-            <Line type="monotone" dataKey="p90" stroke="#38bdf8" strokeWidth={1} strokeDasharray="2 3" dot={false} isAnimationActive={false} />
-            <Line type="monotone" dataKey="p10" stroke="#38bdf8" strokeWidth={1} strokeDasharray="2 3" dot={false} isAnimationActive={false} />
-            <Line type="monotone" dataKey="p50" stroke="#4ade80" strokeWidth={2.4} dot={false} isAnimationActive={false} />
+            <Line type="monotone" dataKey="p90" stroke="var(--cyan)" strokeWidth={1} strokeDasharray="2 3" dot={false} isAnimationActive={false} />
+            <Line type="monotone" dataKey="p10" stroke="var(--cyan)" strokeWidth={1} strokeDasharray="2 3" dot={false} isAnimationActive={false} />
+            <Line type="monotone" dataKey="p50" stroke="var(--accent)" strokeWidth={2.4} dot={false} isAnimationActive={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="data-note" style={{ color: meta[scenario].crossing.includes('avert') ? '#4ade80' : '#fbbf24' }}>
+      <div className="data-note" style={{ color: meta[scenario].crossing.includes('avert') ? 'var(--accent)' : 'var(--amber)' }}>
         {meta[scenario].crossing}. Electrification-conditioned pricing beats blanket tariff hikes in
         grid-deficient districts (VIIRS night-lights interaction).
       </div>

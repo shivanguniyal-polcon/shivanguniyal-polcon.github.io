@@ -40,14 +40,14 @@ function TooltipBox({ active, payload }: any) {
   const d = payload[0].payload as Est;
   return (
     <div style={{
-      background: '#0d1117', border: '1px solid #2d3a47', borderRadius: 8,
-      padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12, color: '#e8edf2',
+      background: 'var(--code-bg)', border: '1px solid var(--line-bright)', borderRadius: 8,
+      padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12, color: 'var(--ink)',
     }}>
-      <div style={{ color: '#5c6b7a' }}>{d.name}</div>
-      <div style={{ color: d.p < 0.05 ? '#4ade80' : '#f87171' }}>
+      <div style={{ color: 'var(--ink-faint)' }}>{d.name}</div>
+      <div style={{ color: d.p < 0.05 ? 'var(--accent)' : 'var(--red)' }}>
         β = {d.beta.toFixed(2)} pp · p = {d.p}
       </div>
-      <div style={{ color: '#9aa7b4' }}>CI ≈ [{d.lo.toFixed(1)}, {d.hi.toFixed(1)}]</div>
+      <div style={{ color: 'var(--ink-dim)' }}>CI ≈ [{d.lo.toFixed(1)}, {d.hi.toFixed(1)}]</div>
     </div>
   );
 }
@@ -71,7 +71,7 @@ export default function EVMEventStudy() {
         <button className={`filter-btn ${view === 'placebo' ? 'active' : ''}`} onClick={() => setView('placebo')}>
           treatment vs placebo
         </button>
-        <span className="readout" style={{ color: '#4ade80' }}>
+        <span className="readout" style={{ color: 'var(--accent)' }}>
           {view === 'dosage'
             ? 'pre-trends null, DiD ≈ −6 to −7pp, ANCOVA washes out'
             : 'placebo cycles return null, as they should'}
@@ -81,23 +81,23 @@ export default function EVMEventStudy() {
       <div style={{ width: '100%', height: 320 }}>
         <ResponsiveContainer>
           <BarChart data={data} margin={{ top: 18, right: 16, left: -8, bottom: 34 }}>
-            <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="name" angle={-24} textAnchor="end" height={64} interval={0}
-              stroke="#5c6b7a" tick={{ fill: '#9aa7b4', fontSize: 10, fontFamily: 'JetBrains Mono' }}
-              tickLine={false} axisLine={{ stroke: '#1f2933' }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-dim)', fontSize: 10, fontFamily: 'JetBrains Mono' }}
+              tickLine={false} axisLine={{ stroke: 'var(--line)' }}
             />
             <YAxis
-              stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
               tickLine={false} axisLine={false} unit="pp"
             />
-            <Tooltip content={<TooltipBox />} cursor={{ fill: '#18212b55' }} />
-            <ReferenceLine y={0} stroke="#5c6b7a" />
+            <Tooltip content={<TooltipBox />} cursor={{ fill: 'var(--chart-cursor)' }} />
+            <ReferenceLine y={0} stroke="var(--ink-faint)" />
             <Bar dataKey="beta" radius={[3, 3, 0, 0]} isAnimationActive animationDuration={900}>
               {data.map((d) => (
                 <Cell
                   key={d.name}
-                  fill={d.kind === 'placebo' || d.kind === 'pretrend' ? '#3a4a5a' : d.p < 0.05 ? '#4ade80' : '#fbbf24'}
+                  fill={d.kind === 'placebo' || d.kind === 'pretrend' ? 'var(--data-muted)' : d.p < 0.05 ? 'var(--accent)' : 'var(--amber)'}
                 />
               ))}
             </Bar>

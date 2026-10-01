@@ -18,6 +18,10 @@ const navLinks = [
   { href: '/about/', label: 'about' },
   { href: '/learning/', label: 'learnings' },
   { href: '/contact/', label: 'contact' },
+  { href: '/brainstorm/', label: 'brainstorm' },
+  /* hash link: never equals a pathname, so it never takes the active state;
+     the mobile rule in global.css hides the 4th, 5th, and 6th nav links */
+  { href: '/#policy-engineer', label: 'policy engineer?' },
 ];
 ---
 
@@ -33,6 +37,18 @@ const navLinks = [
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <title>{title}</title>
+    <script is:inline>
+      /* day/night: the garden mode is remembered site-wide. The class goes
+         on <html> before first paint, so the site always opens in the mode
+         it was left in with no flash of the wrong sky. */
+      try {
+        if (localStorage.getItem('garden-mode') === 'day') {
+          document.documentElement.classList.add('mode-day');
+        }
+      } catch (e) {
+        /* storage unavailable: stay in night mode */
+      }
+    </script>
     <script is:inline>
       document.addEventListener('DOMContentLoaded', () => {
         const els = document.querySelectorAll('.reveal');

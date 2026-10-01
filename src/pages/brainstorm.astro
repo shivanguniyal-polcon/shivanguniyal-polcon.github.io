@@ -1,0 +1,184 @@
+---
+import { marked } from 'marked';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import data from '../data/brainstorm.json';
+
+/* the bench renders straight from src/data/brainstorm.json: add a card
+   there, never here. problem/build go through marked so backticks, bold,
+   and links work inside the cards. null cards render as empty slots. */
+type Status = 'seed' | 'sprouting' | 'build';
+type Card = {
+  tag: string;
+  color: string;
+  status: Status;
+  problem: string;
+  build: string;
+  proof: string | null;
+};
+const cards = (data.cards ?? []) as Array<Card | null>;
+
+const mdInline = (s: string) => marked.parseInline(s, { async: false }) as string;
+
+/* the JSON stores night hexes; tags map them to palette vars so day mode
+   darkens them too. unknown colors pass through untouched. */
+const COLOR_VAR: Record<string, string> = {
+  '#4ade80': 'var(--accent)',
+  '#38bdf8': 'var(--cyan)',
+  '#fbbf24': 'var(--amber)',
+  '#a78bfa': 'var(--violet)',
+  '#f472b6': 'var(--pink)',
+};
+const tagColor = (hex: string) => COLOR_VAR[hex.toLowerCase()] ?? hex;
+const tagBorder = (hex: string) => {
+  const v = COLOR_VAR[hex.toLowerCase()];
+  /* night: hex + 44 alpha. day: the same 27% wash via color-mix. */
+  return v ? `color-mix(in srgb, ${v} 27%, transparent)` : `${hex}44`;
+};
+
+/* the garden language: how far the idea has grown. icons are drawn to
+   match the scene: a seed is the stem's attach dot, a sprout is the stem
+   with its first leaves, a build is the five-petal finale flower. */
+const ICONS = {
+  seed:
+    '<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="3.2" fill="currentColor"/><circle cx="6" cy="6" r="1.2" fill="#0a0e12"/></svg>',
+  sprouting:
+    '<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 11 L6 5.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M6 5.2 C 6 3.2, 4.6 2.2, 2.6 2.7 C 3.1 4.7, 4.5 5.5, 6 5.2 Z" fill="currentColor" opacity="0.85"/><path d="M6 6.6 C 6.1 8.2, 7.9 8.8, 9.5 8.2 C 8.9 6.6, 7.4 6, 6 6.6 Z" fill="currentColor" opacity="0.55"/></svg>',
+  build:
+    '<svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="0.9"><path d="M7 6.4 C 8.7 5.3, 9.1 3.3, 7 1.8 C 4.9 3.3, 5.3 5.3, 7 6.4 Z" fill="currentColor" fill-opacity="0.28"/><path d="M7 6.4 C 8.7 5.3, 9.1 3.3, 7 1.8 C 4.9 3.3, 5.3 5.3, 7 6.4 Z" fill="currentColor" fill-opacity="0.28" transform="rotate(72 7 7)"/><path d="M7 6.4 C 8.7 5.3, 9.1 3.3, 7 1.8 C 4.9 3.3, 5.3 5.3, 7 6.4 Z" fill="currentColor" fill-opacity="0.28" transform="rotate(144 7 7)"/><path d="M7 6.4 C 8.7 5.3, 9.1 3.3, 7 1.8 C 4.9 3.3, 5.3 5.3, 7 6.4 Z" fill="currentColor" fill-opacity="0.28" transform="rotate(216 7 7)"/><path d="M7 6.4 C 8.7 5.3, 9.1 3.3, 7 1.8 C 4.9 3.3, 5.3 5.3, 7 6.4 Z" fill="currentColor" fill-opacity="0.28" transform="rotate(288 7 7)"/></g><circle cx="7" cy="7" r="1.15" fill="currentColor"/></svg>',
+};
+const stage: Record<Status, { label: string; icon: string; note: string }> = {
+  seed: { label: 'seed', icon: ICONS.seed, note: 'question asked, nothing planted yet' },
+  sprouting: { label: 'sprouting', icon: ICONS.sprouting, note: 'a shape for the build exists' },
+  build: { label: 'build', icon: ICONS.build, note: 'it grew into a project' },
+};
+---
+
+<BaseLayout
+  title="Brainstorm · Shivang Uniyal"
+  description="Open problems and candidate builds in policy engineering: the workshop bench where new ideas get sketched before they become projects."
+>
+  <section style="padding-top:88px">
+    <div class="wrap-tight">
+      <div class="kicker">brainstorm // open problems</div>
+      <h1 style="font-size:clamp(32px,4.4vw,46px)">The ideation bench.</h1>
+      <p class="lede" style="margin-top:14px">
+        Where new policy engineering problems get sketched before they earn a
+        build. Each card pairs a question with the shape of the system that
+        could answer it, and carries its growth stage:
+        <span class="bs-legend"><span class="bs-ic" set:html={ICONS.seed} /> seed</span>,
+        <span class="bs-legend"><span class="bs-ic" set:html={ICONS.sprouting} /> sprouting</span>,
+        <span class="bs-legend"><span class="bs-ic" set:html={ICONS.build} /> build</span>.
+      </p>
+
+      <div class="bs-grid">
+        {cards.map((c) =>
+          c === null ? (
+            <article class="bs-slot">
+              <span class="bs-slot-plus">+</span>
+              <span class="bs-slot-txt">next problem goes here</span>
+            </article>
+          ) : (
+            <article class="card bs-card" data-status={c.status}>
+              <div class="bs-head">
+                <span class="bs-tag" style={`color:${tagColor(c.color)}; border-color:${tagBorder(c.color)}`}>{c.tag}</span>
+                <span class="bs-status" title={stage[c.status].note}>
+                  <span class="bs-ic" aria-hidden="true" set:html={stage[c.status].icon} />
+                  <span class="bs-stage">{stage[c.status].label}</span>
+                </span>
+              </div>
+              <h3 class="bs-q" set:html={mdInline(c.problem)} />
+              <p class="bs-build" set:html={mdInline(c.build)} />
+              {c.proof && (
+                <a class="bs-proof" href={`/projects/${c.proof}/`}>
+                  grew into: {c.proof.replaceAll('-', ' ')} →
+                </a>
+              )}
+            </article>
+          )
+        )}
+      </div>
+
+      <div class="data-note" style="margin-top:36px">
+        method: problem first, tool second. every card earns its build only
+        when the question survives contact with the data.
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .bs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .bs-card { padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .bs-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .bs-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid;
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+  .bs-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .bs-ic { color: var(--accent); display: inline-flex; width: 12px; height: 12px; }
+  .bs-ic :global(svg) { width: 100%; height: 100%; display: block; }
+  [data-status='seed'] .bs-ic { color: var(--ink-faint); }
+  [data-status='sprouting'] .bs-ic { color: var(--accent); opacity: 0.75; }
+  .bs-legend .bs-ic { width: 11px; height: 11px; }
+  .bs-q { font-size: 14.5px; color: var(--ink); line-height: 1.45; }
+  .bs-q :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.18);
+    border-radius: 5px;
+    padding: 1px 5px;
+  }
+  .bs-build { margin: 0; font-size: 12.5px; line-height: 1.7; color: var(--ink-dim); }
+  .bs-build :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.18);
+    border-radius: 5px;
+    padding: 1px 5px;
+  }
+  .bs-proof { font-size: 12px; color: var(--accent); margin-top: auto; padding-top: 6px; }
+  .bs-slot {
+    border: 1px dashed var(--line-bright);
+    border-radius: var(--radius);
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--ink-faint);
+    font-size: 12.5px;
+  }
+  .bs-slot-plus { font-size: 22px; line-height: 1; }
+  .bs-legend { white-space: nowrap; color: var(--ink-dim); }
+  .bs-legend .bs-ic { font-size: 11px; }
+  @media (max-width: 720px) {
+    .bs-grid { grid-template-columns: 1fr; }
+  }
+  /* day mode: ink-washed code chips on paper, beige seed core */
+  :global(html.mode-day) .bs-q :global(code),
+  :global(html.mode-day) .bs-build :global(code) {
+    background: rgba(28, 122, 67, 0.09);
+    border-color: rgba(28, 122, 67, 0.24);
+  }
+  :global(html.mode-day) .bs-ic :global(svg circle[fill='#0a0e12']) { fill: #ece5d3; }
+</style>

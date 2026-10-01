@@ -22,6 +22,516 @@ import GardenScene from '../components/GardenScene';
     </div>
   </section>
 
+  {/* policy engineer? the growing stem. The section starts exactly where the
+      garden ends, so the stem reads as a continuation of the lotus: it grows
+      downward through the night as the visitor scrolls, and every chunk of
+      the answer hangs off it like a bud. */}
+  <section class="stem-section" id="policy-engineer" aria-labelledby="pe-title">
+    <div class="stem-track">
+      <svg class="stem-svg" viewBox="0 0 760 1240" aria-hidden="true">
+        <defs>
+          <linearGradient id="stem-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop class="stem-stop-a" offset="0" stop-color="#4ade80" stop-opacity="0.95" />
+            <stop class="stem-stop-b" offset="0.72" stop-color="#4ade80" stop-opacity="0.8" />
+            <stop class="stem-stop-c" offset="1" stop-color="#a7f3d0" stop-opacity="0.95" />
+          </linearGradient>
+        </defs>
+        {/* the path is rebuilt by the script from the live hand-anchor: it
+            sprouts at the gardener's fist, leans back to the rail, then runs
+            straight with a sway that stays inside the attach dots. The whole
+            svg is revealed with a clip that tracks --stem (0..1), so the
+            growth begins at the fist itself. The d here is only the no-JS
+            fallback; viewBox/height are corrected on measure. */}
+        <path class="stem-glow" d="M284 0 C 291 72, 323 187, 380 710 L 380 1240" />
+        <path class="stem-core" d="M284 0 C 291 72, 323 187, 380 710 L 380 1240" />
+      </svg>
+
+      {/* dim paper-cutout vignettes along the scroll, in the gardener's
+          crumpled-paper style: the world the policy work is for. They sit
+          behind everything (z 0) at a whisper of opacity. */}
+      <svg class="pe-vig vig-people" viewBox="0 0 220 170" aria-hidden="true">
+        <defs><filter id="pef1" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.05" numOctaves="4" seed="7" result="n" /><feDiffuseLighting in="n" lightingColor="#ffffff" surfaceScale="1.3" result="l"><feDistantLight azimuth="230" elevation="58" /></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" /></filter></defs>
+        <g filter="url(#pef1)">
+          <circle cx="46" cy="56" r="16" fill="#b9c4cf" />
+          <path d="M39 61 Q46 68 53 61" stroke="#5c6b7a" stroke-width="2" fill="none" />
+          <rect x="30" y="76" width="32" height="40" rx="11" fill="#b9c4cf" />
+          <circle cx="112" cy="44" r="19" fill="#b9c4cf" />
+          <path d="M103 51 Q112 60 121 51" stroke="#5c6b7a" stroke-width="2" fill="none" />
+          <rect x="93" y="67" width="38" height="49" rx="13" fill="#b9c4cf" />
+          <path d="M96 74 C 84 68, 78 58, 80 48" stroke="#b9c4cf" stroke-width="7" fill="none" stroke-linecap="round" />
+          <circle cx="176" cy="60" r="14" fill="#b9c4cf" />
+          <path d="M170 65 Q176 71 182 65" stroke="#5c6b7a" stroke-width="2" fill="none" />
+          <rect x="163" y="77" width="27" height="38" rx="10" fill="#b9c4cf" />
+        </g>
+      </svg>
+      <svg class="pe-vig vig-bureau" viewBox="0 0 240 170" aria-hidden="true">
+        <defs><filter id="pef2" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.055 0.045" numOctaves="4" seed="13" result="n" /><feDiffuseLighting in="n" lightingColor="#ffffff" surfaceScale="1.3" result="l"><feDistantLight azimuth="230" elevation="58" /></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" /></filter></defs>
+        <g filter="url(#pef2)">
+          <circle cx="66" cy="66" r="13" fill="#b9c4cf" />
+          <rect x="53" y="80" width="26" height="20" rx="7" fill="#b9c4cf" />
+          <circle cx="128" cy="66" r="13" fill="#b9c4cf" />
+          <rect x="115" y="80" width="26" height="20" rx="7" fill="#b9c4cf" />
+          <rect x="28" y="98" width="150" height="11" rx="3" fill="#b9c4cf" />
+          <rect x="38" y="109" width="8" height="36" fill="#b9c4cf" />
+          <rect x="160" y="109" width="8" height="36" fill="#b9c4cf" />
+          <rect x="84" y="89" width="18" height="7" rx="1" fill="#e8edf2" transform="rotate(-6 93 92)" />
+          <rect x="140" y="88" width="16" height="7" rx="1" fill="#e8edf2" transform="rotate(5 148 91)" />
+          <circle cx="207" cy="52" r="12" fill="#b9c4cf" />
+          <path d="M198 66 C 196 84, 198 96, 202 106 L 216 106 C 218 88, 216 74, 212 66 Z" fill="#b9c4cf" />
+          <path d="M200 74 C 190 76, 182 82, 176 88" stroke="#b9c4cf" stroke-width="5" fill="none" stroke-linecap="round" />
+        </g>
+      </svg>
+      <svg class="pe-vig vig-kids" viewBox="0 0 220 170" aria-hidden="true">
+        <defs><filter id="pef3" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.065 0.055" numOctaves="4" seed="21" result="n" /><feDiffuseLighting in="n" lightingColor="#ffffff" surfaceScale="1.3" result="l"><feDistantLight azimuth="230" elevation="58" /></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" /></filter></defs>
+        <g filter="url(#pef3)">
+          <circle cx="108" cy="30" r="9" fill="#4ade80" />
+          <circle cx="56" cy="52" r="12" fill="#b9c4cf" />
+          <rect x="46" y="64" width="21" height="27" rx="8" fill="#b9c4cf" transform="rotate(-6 56 77)" />
+          <path d="M50 62 C 44 52, 42 44, 45 36" stroke="#b9c4cf" stroke-width="5" fill="none" stroke-linecap="round" />
+          <path d="M63 62 C 69 52, 71 44, 68 36" stroke="#b9c4cf" stroke-width="5" fill="none" stroke-linecap="round" />
+          <path d="M51 91 L 45 106 M62 91 L 68 106" stroke="#b9c4cf" stroke-width="5" fill="none" stroke-linecap="round" />
+          <circle cx="162" cy="72" r="11" fill="#b9c4cf" />
+          <rect x="153" y="83" width="19" height="25" rx="8" fill="#b9c4cf" transform="rotate(8 162 95)" />
+          <path d="M154 104 L 146 116 M168 105 L 176 114" stroke="#b9c4cf" stroke-width="5" fill="none" stroke-linecap="round" />
+          <path d="M30 132 C 80 138, 150 138, 198 132" stroke="#b9c4cf" stroke-width="2" fill="none" />
+        </g>
+      </svg>
+      <svg class="pe-vig vig-thinker" viewBox="0 0 220 170" aria-hidden="true">
+        <defs><filter id="pef4" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.05 0.04" numOctaves="4" seed="29" result="n" /><feDiffuseLighting in="n" lightingColor="#ffffff" surfaceScale="1.3" result="l"><feDistantLight azimuth="230" elevation="58" /></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" /></filter></defs>
+        <g filter="url(#pef4)">
+          <rect x="42" y="118" width="86" height="12" rx="4" fill="#b9c4cf" />
+          <path d="M96 120 C 100 96, 96 78, 84 66 C 76 58, 64 58, 60 66 C 54 78, 58 100, 66 120 Z" fill="#b9c4cf" />
+          <circle cx="70" cy="48" r="15" fill="#b9c4cf" />
+          <path d="M86 84 C 78 86, 70 78, 72 64" stroke="#b9c4cf" stroke-width="6" fill="none" stroke-linecap="round" />
+          <circle cx="98" cy="44" r="3" fill="#4ade80" />
+          <circle cx="108" cy="33" r="2.4" fill="#4ade80" />
+          <circle cx="116" cy="24" r="1.8" fill="#4ade80" />
+        </g>
+      </svg>
+      <svg class="pe-vig vig-economy" viewBox="0 0 220 170" aria-hidden="true">
+        <defs><filter id="pef5" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.05" numOctaves="4" seed="37" result="n" /><feDiffuseLighting in="n" lightingColor="#ffffff" surfaceScale="1.3" result="l"><feDistantLight azimuth="230" elevation="58" /></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" /></filter></defs>
+        <g filter="url(#pef5)">
+          <rect x="36" y="108" width="18" height="24" rx="3" fill="#b9c4cf" />
+          <rect x="72" y="94" width="18" height="38" rx="3" fill="#b9c4cf" />
+          <rect x="108" y="76" width="18" height="56" rx="3" fill="#b9c4cf" />
+          <rect x="144" y="54" width="18" height="78" rx="3" fill="#b9c4cf" />
+          <path d="M36 100 C 76 88, 112 64, 164 36" stroke="#4ade80" stroke-width="3" fill="none" stroke-linecap="round" />
+          <path d="M164 36 l -13 1 l 6 11 Z" fill="#4ade80" />
+          <path d="M153 54 C 153 46, 153 40, 153 33" stroke="#4ade80" stroke-width="2" fill="none" />
+          <path d="M153 40 C 147 36, 144 30, 146 25 C 152 27, 154 33, 153 40 Z" fill="#4ade80" />
+          <path d="M153 40 C 159 36, 162 30, 160 25 C 154 27, 152 33, 153 40 Z" fill="#4ade80" />
+          <circle cx="194" cy="26" r="8" fill="#fbbf24" />
+        </g>
+      </svg>
+      <svg class="pe-vig vig-courtroom" viewBox="0 0 220 170" aria-hidden="true">
+        <defs><filter id="pef6" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.055 0.045" numOctaves="4" seed="43" result="n" /><feDiffuseLighting in="n" lightingColor="#ffffff" surfaceScale="1.3" result="l"><feDistantLight azimuth="230" elevation="58" /></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" /></filter></defs>
+        <g filter="url(#pef6)">
+          <circle cx="102" cy="42" r="13" fill="#b9c4cf" />
+          <path d="M88 86 C 90 66, 114 66, 116 86 Z" fill="#b9c4cf" />
+          <rect x="34" y="86" width="150" height="13" rx="3" fill="#b9c4cf" />
+          <rect x="44" y="99" width="9" height="38" fill="#b9c4cf" />
+          <rect x="166" y="99" width="9" height="38" fill="#b9c4cf" />
+          <line x1="200" y1="66" x2="200" y2="118" stroke="#b9c4cf" stroke-width="4" />
+          <line x1="184" y1="66" x2="216" y2="66" stroke="#b9c4cf" stroke-width="3" />
+          <path d="M177 84 A 7 7 0 0 0 191 84 Z" fill="#b9c4cf" />
+          <path d="M209 84 A 7 7 0 0 0 223 84 Z" fill="#b9c4cf" transform="translate(-2 0)" />
+          <rect x="60" y="76" width="16" height="8" rx="1" fill="#e8edf2" transform="rotate(-5 68 80)" />
+          <rect x="120" y="77" width="14" height="7" rx="1" fill="#e8edf2" transform="rotate(4 127 80)" />
+        </g>
+      </svg>
+      <svg class="pe-vig vig-farmer" viewBox="0 0 220 170" aria-hidden="true">
+        <defs><filter id="pef7" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.05" numOctaves="4" seed="51" result="n" /><feDiffuseLighting in="n" lightingColor="#ffffff" surfaceScale="1.3" result="l"><feDistantLight azimuth="230" elevation="58" /></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" /></filter></defs>
+        <g filter="url(#pef7)">
+          <circle cx="188" cy="30" r="9" fill="#fbbf24" />
+          <circle cx="66" cy="50" r="11" fill="#b9c4cf" />
+          <path d="M52 46 L 80 46" stroke="#b9c4cf" stroke-width="3" />
+          <path d="M58 62 C 56 78, 58 92, 64 104 L 84 104 C 84 88, 80 74, 74 62 Z" fill="#b9c4cf" />
+          <path d="M76 76 C 86 82, 94 88, 101 95" stroke="#b9c4cf" stroke-width="5" fill="none" stroke-linecap="round" />
+          <line x1="104" y1="82" x2="113" y2="118" stroke="#b9c4cf" stroke-width="3.5" />
+          <path d="M20 128 C 80 122, 150 122, 200 128" stroke="#b9c4cf" stroke-width="2" fill="none" />
+          <path d="M20 142 C 80 136, 150 136, 200 142" stroke="#b9c4cf" stroke-width="2" fill="none" />
+          <path d="M20 156 C 80 150, 150 150, 200 156" stroke="#b9c4cf" stroke-width="2" fill="none" />
+          <path d="M42 120 L 38 111 M42 120 L 47 112" stroke="#4ade80" stroke-width="2" fill="none" />
+          <path d="M106 122 L 102 113 M106 122 L 111 114" stroke="#4ade80" stroke-width="2" fill="none" />
+          <path d="M166 120 L 162 111 M166 120 L 171 112" stroke="#4ade80" stroke-width="2" fill="none" />
+        </g>
+      </svg>
+
+      <header class="stem-head">
+        <div class="kicker">explaining myself // the long version</div>
+        <h2 class="section-title" id="pe-title">policy engineer?</h2>
+        <p class="lede">
+          People ask me why I put engineer next to policy. Fair question. So
+          here is the long version: a stem that grows as you scroll, with
+          every part of the answer hanging off it.
+        </p>
+      </header>
+
+      <div class="pe-node left">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-up" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk">
+          <header class="pe-chunk-head"><h3>the short answer</h3><span class="pe-idx mono">01</span></header>
+          <p>I design, build, test, and improve policy as a complete working system. Not a document that gets filed away. A live system that people use, one that has to work in the real world.</p>
+        </article>
+      </div>
+
+      <div class="pe-node right">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-down" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk">
+          <header class="pe-chunk-head"><h3>the full stack of policy</h3><span class="pe-idx mono">02</span></header>
+          <p>Software has a stack. So does policy, and I work across all of it.</p>
+          <div class="pe-rows">
+            <div class="pe-row"><span class="pe-key">frontend</span><span>the part people see and use: services, forms, messages, offices, digital access</span></div>
+            <div class="pe-row"><span class="pe-key">backend</span><span>the base that makes it work: law, budget, data, staff, authority, infrastructure</span></div>
+            <div class="pe-row"><span class="pe-key">middle layer</span><span>the connective tissue: process, data flow, decision rights, feedback, operations</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="pe-node left">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-up" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk">
+          <header class="pe-chunk-head"><h3>how I work</h3><span class="pe-idx mono">03</span></header>
+          <p>Technology and computation are in the toolkit, but so are systems thinking and qualitative judgment. Data shows patterns, human insight gives them meaning. I do not force one fixed method onto every problem. I design the response that fits the problem, then innovate, improve, and help good methods spread.</p>
+        </article>
+      </div>
+
+      <div class="pe-node right">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-down" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk">
+          <header class="pe-chunk-head"><h3>from intent to system</h3><span class="pe-idx mono">04</span></header>
+          <p>Policy engineering is the practice of turning public intent into a working system. Start with a clear view of the problem: map the system, identify the people affected, study the causes, test possible actions. Build, and connect <a class="pe-link" href="/projects/manifesto-analysis/" title="see the build: manifesto analysis in code">law, service, technology, and operations</a> so it works in practice, not only on paper. Then monitor the results and correct the design.</p>
+        </article>
+      </div>
+
+      <div class="pe-node left">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-up" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk">
+          <header class="pe-chunk-head"><h3>built for wicked problems</h3><span class="pe-idx mono">05</span></header>
+          <p>The hardest problems in government are wicked: many causes, many people, shifting over time, no single right answer. A fixed process fails here. So I build <a class="pe-link" href="/projects/pmjay-system-dynamics/" title="see the build: PM-JAY system dynamics">systems that learn</a>. They use evidence. They respond to human need. They stay safe under pressure.</p>
+        </article>
+      </div>
+
+      <div class="pe-node right">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-down" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk">
+          <header class="pe-chunk-head"><h3>what it is not</h3><span class="pe-idx mono">06</span></header>
+          <p>A policy engineer is not someone who stamps an existing process onto a new problem. No copying a template and calling it a solution. Policy is not a fixed object. It is a living system that affects real people, and it deserves the same care as anything load-bearing.</p>
+        </article>
+      </div>
+
+      <div class="pe-node left">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-up" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk">
+          <header class="pe-chunk-head"><h3>principles I work from</h3><span class="pe-idx mono">07</span></header>
+          <div class="pe-rows">
+            <div class="pe-row"><span class="pe-key">01</span><span>Start with the problem, never with a preferred tool.</span></div>
+            <div class="pe-row"><span class="pe-key">02</span><span>Design for people: easy to use, respectful, fitted to real conditions.</span></div>
+            <div class="pe-row"><span class="pe-key">03</span><span>Use evidence and judgment together. Data shows patterns, judgment gives meaning.</span></div>
+            <div class="pe-row"><span class="pe-key">04</span><span>Build for change. Update the policy when the evidence changes.</span></div>
+            <div class="pe-row"><span class="pe-key">05</span><span>Make the system safe. Test before wide use, look for harm, protect people from failure.</span></div>
+            <div class="pe-row"><span class="pe-key">06</span><span>Share what works. Record results, share methods, help the field grow.</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="pe-node right">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-down" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk">
+          <header class="pe-chunk-head"><h3>engineering, applied</h3><span class="pe-idx mono">08</span></header>
+          <p>The vocabulary transfers cleanly, and each term is a working habit:</p>
+          <div class="pe-rows">
+            <div class="pe-row"><span class="pe-key"><a class="pe-link" href="/projects/critical-minerals-reserve/" title="see the build: critical minerals reserve">load-bearing</a></span><span>rules designed to carry public demand, legal pressure, and crisis</span></div>
+            <div class="pe-row"><span class="pe-key"><a class="pe-link" href="/projects/combat-drones-sd/" title="see the build: combat drones scenario model">stress testing</a></span><span>what happens to the policy under scarcity, misuse, and shock</span></div>
+            <div class="pe-row"><span class="pe-key"><a class="pe-link" href="/projects/pmjay-system-dynamics/" title="see the build: PM-JAY system dynamics">feedback loops</a></span><span>data, complaints, and measures that keep the system honest</span></div>
+            <div class="pe-row"><span class="pe-key"><a class="pe-link" href="/projects/pm-speeches-dashboard/" title="see the build: PM speeches dashboard">friction reduction</a></span><span>removing delay, confusion, and waste from public processes</span></div>
+            <div class="pe-row"><span class="pe-key"><a class="pe-link" href="/projects/spatial-crosswalk/" title="see the build: the district spatial crosswalk">refactoring</a></span><span>simplifying law or process without losing the original intent</span></div>
+            <div class="pe-row"><span class="pe-key"><a class="pe-link" href="/projects/green-bond-npv/" title="see the build: green bond NPV model">catalysts</a></span><span>incentives and information that let a small action produce a large effect</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="pe-node left">
+        <div class="pe-stalk" aria-hidden="true">
+          <svg class="pe-leaf leaf-up" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 17 C 6 4, 20 0, 33 3 C 26 13, 12 18, 1 17 Z" /></svg>
+        </div>
+        <article class="pe-chunk finale">
+          <header class="pe-chunk-head"><h3>why it matters</h3><span class="pe-idx mono">09</span></header>
+          <p>Policy affects real people. A bad process wastes time, causes harm, and erodes trust. A good process gives access, solves problems, and restores confidence. Done with care, policy engineering makes public systems safer, simpler, and more human. In one sentence:</p>
+          <p class="pe-punch">A policy engineer builds policy systems that are fit for the problem, safe for people, and ready to improve.</p>
+        </article>
+      </div>
+
+      <div class="stem-tail" aria-hidden="true"></div>
+      <div class="stem-bloom" aria-hidden="true">
+        <svg viewBox="0 0 96 96" fill="none">
+          <defs>
+            <radialGradient id="bloom-glow">
+              <stop offset="0" stop-color="#4ade80" stop-opacity="0.22" />
+              <stop offset="1" stop-color="#4ade80" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <circle cx="48" cy="48" r="40" fill="url(#bloom-glow)" />
+          <g stroke="#4ade80" stroke-width="1.4">
+            <path d="M48 47 C 60 38, 64 22, 48 8 C 32 22, 36 38, 48 47 Z" fill="rgba(74, 222, 128, 0.16)" />
+            <path d="M48 47 C 60 38, 64 22, 48 8 C 32 22, 36 38, 48 47 Z" fill="rgba(74, 222, 128, 0.16)" transform="rotate(72 48 48)" />
+            <path d="M48 47 C 60 38, 64 22, 48 8 C 32 22, 36 38, 48 47 Z" fill="rgba(74, 222, 128, 0.16)" transform="rotate(144 48 48)" />
+            <path d="M48 47 C 60 38, 64 22, 48 8 C 32 22, 36 38, 48 47 Z" fill="rgba(74, 222, 128, 0.16)" transform="rotate(216 48 48)" />
+            <path d="M48 47 C 60 38, 64 22, 48 8 C 32 22, 36 38, 48 47 Z" fill="rgba(74, 222, 128, 0.16)" transform="rotate(288 48 48)" />
+          </g>
+          <circle cx="48" cy="48" r="5" fill="#4ade80" />
+          <circle cx="48" cy="48" r="1.8" fill="#0a0e12" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* ---------- policy engineer? the growing stem ---------- */
+    .stem-section {
+      padding: 0 0 72px;
+      position: relative;
+      scroll-margin-top: 76px;
+    }
+    .stem-track {
+      position: relative;
+      padding: 84px 24px 0;
+      --stem: 0;
+      /* --rise: fist-to-section distance, measured by the script; --stem-x:
+         the rail the stem and the attach dots share */
+      --rise: 240px;
+      --stem-x: 50%;
+    }
+    .pe-vig {
+      position: absolute;
+      z-index: 0;
+      width: clamp(150px, 16vw, 235px);
+      height: auto;
+      opacity: 0.11;
+      pointer-events: none;
+      user-select: none;
+    }
+    /* alternating sides, spread down the whole scroll */
+    .vig-people { top: 4%; left: 3%; }
+    .vig-bureau { top: 17%; right: 4%; width: clamp(160px, 17vw, 250px); }
+    .vig-courtroom { top: 30%; left: 3%; }
+    .vig-kids { top: 44%; right: 4%; width: clamp(140px, 14vw, 205px); }
+    .vig-farmer { top: 58%; left: 3%; }
+    .vig-thinker { top: 71%; right: 4%; }
+    .vig-economy { top: 84%; left: 3%; }
+    .stem-svg {
+      position: absolute;
+      /* the svg rises up into the garden (--rise, measured to the gardener's
+         fist) so the sprout begins at the hand; viewBox is kept 1:1 with the
+         CSS box, so stroke widths stay true at every breakpoint */
+      top: calc(-1 * var(--rise));
+      height: calc(100% + var(--rise));
+      left: var(--stem-x);
+      width: 760px;
+      transform: translateX(-50%);
+      z-index: 2;
+      overflow: visible;
+      pointer-events: none;
+      /* grow from the top: clip away (1 - stem) of the height from below */
+      clip-path: inset(0 0 calc((1 - var(--stem)) * 100%) 0);
+    }
+    .stem-core,
+    .stem-glow { fill: none; }
+    .stem-core { stroke: url(#stem-grad); stroke-width: 2; }
+    .stem-glow { stroke: #4ade80; stroke-width: 9; opacity: 0.08; }
+
+    /* the heading lives in the right column: the stem sweeps in from the
+       gardener's fist on the left, so no word ever sits under the line */
+    .stem-head {
+      position: relative;
+      z-index: 2;
+      max-width: min(560px, calc(50% - 120px));
+      margin: 0 0 56px auto;
+      text-align: left;
+    }
+    .stem-head .lede { margin: 0; }
+
+    .pe-node {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 96px 1fr;
+      align-items: center;
+      min-height: 330px;
+    }
+    .pe-stalk {
+      grid-column: 2;
+      position: relative;
+      align-self: stretch;
+    }
+    /* connector: grows from the stem out to the box as the node reveals */
+    .pe-node.left .pe-stalk::before,
+    .pe-node.right .pe-stalk::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(74, 222, 128, 0.05), #2d3a47);
+      transform: scaleX(0);
+      transition: transform 0.5s ease 0.1s;
+    }
+    /* connectors and dots are placed by the script via --dot-x, sampled
+       from the real path, so they land on the stem wherever it wanders */
+    .pe-node.left .pe-stalk::before { left: 0; right: calc(50% - var(--dot-x, 0px)); transform-origin: right center; }
+    .pe-node.right .pe-stalk::before { left: calc(50% + var(--dot-x, 0px)); right: 0; transform-origin: left center; }
+    .pe-node.on .pe-stalk::before { transform: scaleX(1); }
+    /* the attach dot sits exactly on the stem line */
+    .pe-stalk::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: calc(50% + var(--dot-x, 0px));
+      width: 9px;
+      height: 9px;
+      margin: -6px 0 0 -6px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1.5px solid var(--accent);
+      box-shadow: 0 0 12px rgba(74, 222, 128, 0.35);
+      transform: scale(0);
+      transition: transform 0.4s ease 0.2s;
+    }
+    .pe-node.on .pe-stalk::after { transform: scale(1); }
+
+    .pe-leaf {
+      position: absolute;
+      width: 34px;
+      height: 18px;
+      opacity: 0;
+      transition: opacity 0.5s ease 0.35s, transform 0.5s ease 0.35s;
+    }
+    .pe-leaf path { fill: rgba(74, 222, 128, 0.35); stroke: rgba(74, 222, 128, 0.75); stroke-width: 1; }
+    /* leaves sprout from the stem into the empty half, base overlapping the line */
+    .pe-node.left .pe-leaf { left: calc(50% + var(--dot-x, 0px) - 3px); transform: scale(0.4); }
+    .pe-node.left.on .pe-leaf { opacity: 1; transform: scale(1); }
+    .pe-node.right .pe-leaf { left: calc(50% + var(--dot-x, 0px) - 31px); transform: scaleX(-1) scale(0.4); }
+    .pe-node.right.on .pe-leaf { opacity: 1; transform: scaleX(-1) scale(1); }
+    .leaf-up { top: calc(50% - 40px); }
+    .leaf-down { top: calc(50% + 22px); }
+
+    .pe-chunk {
+      width: min(520px, 100%);
+      background: rgba(16, 21, 27, 0.42);
+      border: 1px solid rgba(45, 58, 71, 0.55);
+      border-radius: var(--radius);
+      padding: 20px 22px 18px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .pe-node.on .pe-chunk { opacity: 1; transform: translateY(0); }
+    .pe-node.left .pe-chunk {
+      grid-column: 1;
+      justify-self: end;
+      box-shadow: inset -2px 0 0 rgba(74, 222, 128, 0.4), 0 18px 44px rgba(0, 0, 0, 0.28);
+    }
+    .pe-node.right .pe-chunk {
+      grid-column: 3;
+      justify-self: start;
+      box-shadow: inset 2px 0 0 rgba(74, 222, 128, 0.4), 0 18px 44px rgba(0, 0, 0, 0.28);
+    }
+    .pe-chunk-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+    .pe-chunk h3 { font-size: 14px; letter-spacing: 0.02em; color: var(--ink); }
+    .pe-idx { font-size: 11px; letter-spacing: 0.14em; color: var(--ink-faint); }
+    .pe-chunk p { margin: 10px 0 0; font-size: 13.5px; line-height: 1.75; color: var(--ink-dim); }
+    /* claims in the boxes deep-link to the builds that prove them */
+    .pe-link {
+      color: var(--accent);
+      border-bottom: 1px dashed rgba(74, 222, 128, 0.5);
+      text-decoration: none;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .pe-link:hover { border-bottom-style: solid; color: #a7f3d0; }
+    .pe-rows { margin: 12px 0 0; display: grid; gap: 9px; }
+    .pe-row {
+      display: grid;
+      grid-template-columns: 108px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--ink-dim);
+    }
+    .pe-key { color: var(--accent); font-size: 12px; }
+    .pe-chunk.finale { border-color: rgba(74, 222, 128, 0.38); }
+    .pe-punch {
+      margin: 14px 0 2px;
+      padding: 13px 16px;
+      border-left: 2px solid var(--accent);
+      background: rgba(74, 222, 128, 0.07);
+      border-radius: 0 8px 8px 0;
+      color: var(--ink);
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    .stem-tail { height: 150px; }
+    .stem-bloom {
+      position: absolute;
+      bottom: -26px;
+      left: calc(50% + var(--tail-x, 0px));
+      width: 84px;
+      height: 84px;
+      z-index: 1;
+      opacity: 0;
+      /* translateX centers the bloom on the stem x at every breakpoint,
+         so it rides the left rail on mobile too */
+      transform: translateX(-50%) scale(0.3) rotate(-30deg);
+      transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.25), opacity 0.5s ease;
+      pointer-events: none;
+    }
+    .stem-bloom.open { opacity: 1; transform: translateX(-50%) scale(1) rotate(0deg); }
+    .stem-bloom.open svg { animation: bloomPulse 4.5s ease-in-out infinite; }
+    @keyframes bloomPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.82; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pe-chunk,
+      .pe-stalk::before,
+      .pe-stalk::after,
+      .pe-leaf,
+      .stem-bloom { transition: none; }
+      .stem-bloom.open svg { animation: none; }
+    }
+
+    @media (max-width: 860px) {
+      .stem-track { padding: 64px 14px 0; --stem-x: 36px; }
+      .stem-head { margin-bottom: 40px; padding-left: 72px; max-width: none; }
+      .pe-vig { width: clamp(110px, 30vw, 165px); opacity: 0.085; }
+      .pe-node { grid-template-columns: 44px 1fr; min-height: 0; padding: 30px 0; }
+      .pe-stalk { grid-column: 1; }
+      .pe-node.left .pe-chunk,
+      .pe-node.right .pe-chunk { grid-column: 2; justify-self: stretch; width: 100%; }
+      .pe-node.left .pe-stalk::before { left: calc(50% + var(--dot-x, 0px)); right: 0; transform-origin: left center; }
+      .pe-node.left .pe-chunk { box-shadow: inset 2px 0 0 rgba(74, 222, 128, 0.4), 0 18px 44px rgba(0, 0, 0, 0.28); }
+      .pe-leaf { display: none; }
+      .pe-row { grid-template-columns: 96px 1fr; }
+      .stem-bloom { left: calc(36px + var(--tail-x, 0px)); width: 64px; height: 64px; }
+    }
+  </style>
+
   <style>
     /* One continuous scene: the GardenScene stage fills the whole landing
        column and the hero copy floats over its sky. Nothing frames it, so
@@ -64,6 +574,44 @@ import GardenScene from '../components/GardenScene';
       .landing { min-height: 560px; }
       .landing-hero { padding-top: 22px; }
     }
+
+    /* ---------- day mode: ink and leaf on aged paper ----------
+       The switch lives on the garden's moon; these rules recolor the
+       explainer so it reads on the beige page. :global wraps the html
+       part because scoped selectors never match <html>. */
+    :global(html.mode-day) .stem-stop-a { stop-color: #1c7a43; }
+    :global(html.mode-day) .stem-stop-b { stop-color: #1c7a43; }
+    :global(html.mode-day) .stem-stop-c { stop-color: #2f9457; }
+    :global(html.mode-day) .stem-glow { stroke: #1c7a43; opacity: 0.1; }
+    :global(html.mode-day) .pe-vig { opacity: 0.15; }
+    :global(html.mode-day) .pe-stalk::after { box-shadow: 0 0 12px rgba(28, 122, 67, 0.4); }
+    :global(html.mode-day) .pe-node.left .pe-stalk::before,
+    :global(html.mode-day) .pe-node.right .pe-stalk::before {
+      background: linear-gradient(90deg, rgba(28, 122, 67, 0.06), #b3a685);
+    }
+    :global(html.mode-day) .pe-leaf path {
+      fill: rgba(28, 122, 67, 0.3);
+      stroke: rgba(28, 122, 67, 0.75);
+    }
+    :global(html.mode-day) .pe-chunk {
+      background: rgba(251, 247, 237, 0.72);
+      border-color: rgba(133, 120, 90, 0.55);
+    }
+    :global(html.mode-day) .pe-node.left .pe-chunk {
+      box-shadow: inset -2px 0 0 rgba(28, 122, 67, 0.45), 0 18px 44px rgba(70, 58, 32, 0.18);
+    }
+    :global(html.mode-day) .pe-node.right .pe-chunk {
+      box-shadow: inset 2px 0 0 rgba(28, 122, 67, 0.45), 0 18px 44px rgba(70, 58, 32, 0.18);
+    }
+    :global(html.mode-day) .pe-link { border-bottom-color: rgba(28, 122, 67, 0.5); }
+    :global(html.mode-day) .pe-link:hover { color: #14532d; }
+    :global(html.mode-day) .pe-chunk.finale { border-color: rgba(28, 122, 67, 0.45); }
+    :global(html.mode-day) .pe-punch { background: rgba(28, 122, 67, 0.08); }
+    :global(html.mode-day) .stem-bloom circle[fill="#0a0e12"] { fill: #ece5d3; }
+    :global(html.mode-day) .stem-bloom stop { stop-color: #1c7a43; }
+    :global(html.mode-day) .stem-bloom g[stroke="#4ade80"] { stroke: #1c7a43; }
+    :global(html.mode-day) .stem-bloom path[fill^="rgba(74"] { fill: rgba(28, 122, 67, 0.14); }
+    :global(html.mode-day) .stem-bloom circle[fill="#4ade80"] { fill: #1c7a43; }
   </style>
 
   <script>
@@ -116,5 +664,165 @@ import GardenScene from '../components/GardenScene';
     window.addEventListener('scroll', onScroll, { passive: true });
     if (fine) window.addEventListener('mousemove', onMouse, { passive: true });
     apply();
+  </script>
+
+  <script>
+    /* the growing stem: it sprouts from the gardener's fist (the live
+       .hand-anchor the garden renders once hydrated), leans back to the rail
+       as it grows, then runs straight past the attach dots. --stem (0..1) is
+       the share of the path drawn, measured from the fist. The growth tip
+       rides at 72% of the viewport height; a node reveals when the tip
+       passes its dot. Near the very bottom of the page the growth finishes
+       so the last chunk and the bloom always arrive. */
+    (() => {
+      const sec = document.getElementById('policy-engineer');
+      if (!sec) return;
+      const track = sec.querySelector<HTMLElement>('.stem-track');
+      const nodes = Array.from(sec.querySelectorAll<HTMLElement>('.pe-node'));
+      const bloomEl = sec.querySelector<HTMLElement>('.stem-bloom');
+      const svgEl = sec.querySelector<SVGSVGElement>('.stem-svg');
+      const corePath = sec.querySelector<SVGPathElement>('.stem-core');
+      const glowPath = sec.querySelector<SVGPathElement>('.stem-glow');
+      if (!track || !svgEl || !corePath || !glowPath) return;
+      const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
+      const SW = 760;   /* svg width in px == viewBox units, so 1:1 */
+      const CX = SW / 2;/* the rail (stalk line) in svg x */
+      let trackTop = 0;
+      let trackH = 1;
+      let rise = 240;   /* fist down to the section top */
+      let handDx = -96; /* fist x relative to the rail */
+      let handFound = false;
+      let pathLen = 1;
+
+      /* seeded PRNG: the meander is organic but identical on every rebuild,
+         so resizes never make the plant visibly jump. Seed 10 was picked by
+         sweeping 500 seeds for rhythm: 4 rail crossings, max 95px sway, no
+         stub segments near the bloom. The generator is re-created on every
+         buildPath call, so repeated re-measures replay the same walk. */
+      const mkRand = (seed: number) => () => {
+        seed = (seed + 0x6d2b79f5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+
+      /* x on the stem at a given y. The path is monotonic in y (every
+         control point keeps that order), so a binary search over arc
+         length finds it in ~22 steps. */
+      const xAtY = (y: number) => {
+        let lo = 0;
+        let hi = pathLen;
+        for (let i = 0; i < 22; i++) {
+          const mid = (lo + hi) / 2;
+          if (corePath.getPointAtLength(mid).y < y) lo = mid;
+          else hi = mid;
+        }
+        return corePath.getPointAtLength((lo + hi) / 2).x;
+      };
+
+      /* Organic stems are drawn the way illustrators draw them (the
+         generative-art trick): drop waypoints with a mean-reverting random
+         walk so the plant wanders but stays in its lane, then join each
+         pair with a cubic whose handles alternate the approach side. That
+         alternating flip is what makes the line read as bends with dents
+         between them, not one uniform sine. */
+      const buildPath = () => {
+        const rand = mkRand(10);
+        const total = Math.round(rise + trackH);
+        svgEl.setAttribute('viewBox', `0 0 ${SW} ${total}`);
+        track.style.setProperty('--rise', `${Math.round(rise)}px`);
+        const hx = CX + handDx;
+        const pts: Array<{ x: number; y: number }> = [{ x: hx, y: 0 }];
+        /* the walk: waypoints every 300-560px, mean-reverting steps with
+           a 95px kick, kept inside a 140px lane. The last waypoint is
+           forced to the bottom so the bloom never lands on a stub bend. */
+        let y = 0;
+        let x = hx;
+        for (;;) {
+          const ny = y + 300 + rand() * 260;
+          y = ny >= total - 620 ? total : Math.min(ny, total - 620);
+          const step = (rand() * 2 - 1) * 95 + (CX - x) * 0.3;
+          x = clamp(x + step, CX - 140, CX + 140);
+          pts.push({ x: Math.round(x), y: Math.round(y) });
+          if (y >= total) break;
+        }
+        let d = `M ${pts[0].x} 0`;
+        for (let i = 1; i < pts.length; i++) {
+          const p0 = pts[i - 1];
+          const p1 = pts[i];
+          const h = Math.max(60, p1.y - p0.y);
+          const side = i % 2 ? 1 : -1;
+          const e = Math.min(90, 10 + rand() * h * 0.16) * side;
+          const f = h * (0.32 + rand() * 0.12);
+          d += ` C ${(p0.x + e).toFixed(1)} ${(p0.y + f).toFixed(0)},` +
+            ` ${(p1.x - e).toFixed(1)} ${(p1.y - f).toFixed(0)}, ${p1.x} ${p1.y}`;
+        }
+        corePath.setAttribute('d', d);
+        glowPath.setAttribute('d', d);
+        pathLen = corePath.getTotalLength();
+      };
+
+      const measure = () => {
+        const r = track.getBoundingClientRect();
+        trackTop = r.top + window.scrollY;
+        trackH = Math.max(1, r.height);
+        /* the fist: the live hand-anchor inside the garden scene; the rail:
+           the first stalk column the dots hang from. Both measured in the
+           same frame, so the deltas are scroll-independent. */
+        const hand = document.querySelector('.hand-anchor');
+        const stalk = sec.querySelector<HTMLElement>('.pe-stalk');
+        if (hand && stalk) {
+          const hr = hand.getBoundingClientRect();
+          const sr = stalk.getBoundingClientRect();
+          rise = Math.max(80, Math.round(r.top - hr.top));
+          handDx = Math.round(hr.left + hr.width / 2 - (sr.left + sr.width / 2));
+          handFound = true;
+        }
+        buildPath();
+        /* the dots, connectors, and the bloom sample the real path so they
+           sit on the line however far the plant wandered */
+        for (const n of nodes) {
+          const ySvg = rise + n.offsetTop + n.offsetHeight * 0.5;
+          n.style.setProperty('--dot-x', `${(xAtY(ySvg) - CX).toFixed(1)}px`);
+        }
+        track.style.setProperty('--tail-x', `${(xAtY(rise + trackH - 6) - CX).toFixed(1)}px`);
+      };
+
+      const apply = () => {
+        /* until the garden hydrates and hands us the anchor, re-measure on
+           every scroll: it is four rect reads, and it self-stops once found */
+        if (!handFound) measure();
+        const stemTop = trackTop - rise;
+        const total = rise + trackH;
+        const tip = window.scrollY + window.innerHeight * 0.72;
+        let p = (tip - stemTop) / total;
+        if (document.documentElement.scrollHeight - window.innerHeight - window.scrollY < 200) p = 1;
+        p = clamp(p, 0, 1);
+        track.style.setProperty('--stem', p.toFixed(4));
+        /* garden captions (figure tag, hints) recede while the sprout is
+           still inside the scene: gone before the stem crosses their line */
+        const stage = document.querySelector('.scene-stage');
+        if (stage) stage.style.setProperty('--gfade', clamp(p * 22, 0, 1).toFixed(3));
+        const tipY = stemTop + p * total;
+        for (const n of nodes) {
+          n.classList.toggle('on', tipY >= trackTop + n.offsetTop + n.offsetHeight * 0.5);
+        }
+        if (bloomEl) bloomEl.classList.toggle('open', p >= 0.985);
+      };
+
+      /* scroll runs apply() directly: the work is a few style writes and 9
+         class toggles, and scroll events arrive at most once per frame, so
+         an rAF gate buys nothing and deadlocks in background tabs, where
+         rAF callbacks never fire. */
+      window.addEventListener('scroll', apply, { passive: true });
+      window.addEventListener('resize', () => { measure(); apply(); });
+      window.addEventListener('load', () => { measure(); apply(); });
+      measure();
+      apply();
+      /* layout settles late (fonts, the hydrating garden that places the
+         hand-anchor): re-measure, then once more for safety */
+      setTimeout(() => { measure(); apply(); }, 450);
+      setTimeout(() => { measure(); apply(); }, 1600);
+    })();
   </script>
 </BaseLayout>

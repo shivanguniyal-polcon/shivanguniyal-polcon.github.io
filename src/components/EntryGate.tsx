@@ -1,5 +1,18 @@
 import { useEffect, useState } from 'react';
 
+/* the garden's five-petal mark, drawn from the palette vars so the badge
+   and wash follow day/night with everything else */
+const LOTUS = `<svg viewBox="0 0 96 96" fill="none" aria-hidden="true">
+  <g stroke="var(--accent)" stroke-width="2">
+    <path d="M48 58 C 62 48, 66 30, 48 16 C 30 30, 34 48, 48 58 Z" fill="var(--accent)" fill-opacity="0.22"/>
+    <path d="M48 58 C 62 48, 66 30, 48 16 C 30 30, 34 48, 48 58 Z" fill="var(--accent)" fill-opacity="0.22" transform="rotate(72 48 48)"/>
+    <path d="M48 58 C 62 48, 66 30, 48 16 C 30 30, 34 48, 48 58 Z" fill="var(--accent)" fill-opacity="0.22" transform="rotate(144 48 48)"/>
+    <path d="M48 58 C 62 48, 66 30, 48 16 C 30 30, 34 48, 48 58 Z" fill="var(--accent)" fill-opacity="0.22" transform="rotate(216 48 48)"/>
+    <path d="M48 58 C 62 48, 66 30, 48 16 C 30 30, 34 48, 48 58 Z" fill="var(--accent)" fill-opacity="0.22" transform="rotate(288 48 48)"/>
+  </g>
+  <circle cx="48" cy="48" r="4.5" fill="var(--accent)"/>
+</svg>`;
+
 /**
  * Entry gate: one question before the portfolio opens.
  * Accepts "people", "society", "public welfare", "welfare", "public good",
@@ -68,6 +81,9 @@ export default function EntryGate() {
   return (
       <div className="gate-screen" role="dialog" aria-modal="true" aria-label="Entry question">
         <div className={`gate-card ${shake ? 'gate-shake' : ''}`}>
+          <div className="gate-lotus" aria-hidden="true">
+            <span className="gate-lotus-mark" dangerouslySetInnerHTML={{ __html: LOTUS }} />
+          </div>
           <div className="gate-kicker">gate // one question</div>
           <h1 className="gate-q">Who do you think policies should serve?</h1>
           <form onSubmit={submit} className="gate-form">
@@ -95,9 +111,22 @@ export default function EntryGate() {
             position: fixed; inset: 0; z-index: 500;
             display: flex; align-items: center; justify-content: center;
             background:
-              radial-gradient(ellipse 80% 60% at 50% 38%, rgba(74,222,128,0.05), transparent 65%),
+              radial-gradient(ellipse 80% 60% at 50% 38%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 65%),
               var(--bg);
             padding: 24px;
+          }
+          .gate-lotus {
+            display: flex; justify-content: center;
+            margin-bottom: 6px;
+          }
+          .gate-lotus-mark {
+            width: 64px; height: 64px;
+            animation: gateBreathe 5.5s ease-in-out infinite;
+          }
+          .gate-lotus-mark svg { width: 100%; height: 100%; display: block; }
+          @keyframes gateBreathe {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
           }
           .gate-card {
             max-width: 560px; width: 100%;
@@ -146,6 +175,7 @@ export default function EntryGate() {
           }
           @media (prefers-reduced-motion: reduce) {
             .gate-shake { animation: none; }
+            .gate-lotus-mark { animation: none; }
           }
         `}</style>
       </div>

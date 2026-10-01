@@ -4,13 +4,15 @@ import {
 } from 'recharts';
 import { simulate, SCENARIOS, type ScenarioKey } from '../../lib/droneModel';
 
+/* palette vars keep the night hexes and let day mode darken every line
+   and legend swatch (and the tooltip text, which reads p.stroke) */
 const colors: Record<ScenarioKey, string> = {
-  baseline: '#5c6b7a',
-  national_drone_mission: '#4ade80',
-  export_led: '#38bdf8',
-  combined: '#a78bfa',
-  arms_race: '#f87171',
-  combined_counter_drone: '#fbbf24',
+  baseline: 'var(--ink-faint)',
+  national_drone_mission: 'var(--accent)',
+  export_led: 'var(--cyan)',
+  combined: 'var(--violet)',
+  arms_race: 'var(--red)',
+  combined_counter_drone: 'var(--amber)',
 };
 
 type MetricKey = 'fleet' | 'capacity' | 'cuasFleet' | 'exportRev' | 'intercept';
@@ -57,14 +59,14 @@ export default function DroneScenarios() {
       <div style={{ width: '100%', height: 340 }}>
         <ResponsiveContainer>
           <LineChart data={data} margin={{ top: 10, right: 16, left: -6, bottom: 0 }}>
-            <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="t" type="number" domain={[2024, 2035]} tickCount={6} tickFormatter={(v) => v.toFixed(0)}
-              stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
-              tickLine={false} axisLine={{ stroke: '#1f2933' }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+              tickLine={false} axisLine={{ stroke: 'var(--line)' }}
             />
             <YAxis
-              stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
               tickLine={false} axisLine={false}
               tickFormatter={(v: number) => (metric === 'exportRev' ? `${Math.round(v / 1000)}k` : Math.round(v).toString())}
             />
@@ -72,10 +74,10 @@ export default function DroneScenarios() {
               content={({ active, payload, label }: any) =>
                 active && payload?.length ? (
                   <div style={{
-                    background: '#0d1117', border: '1px solid #2d3a47', borderRadius: 8,
+                    background: 'var(--code-bg)', border: '1px solid var(--line-bright)', borderRadius: 8,
                     padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
                   }}>
-                    <div style={{ color: '#5c6b7a' }}>{Math.floor(label)}</div>
+                    <div style={{ color: 'var(--ink-faint)' }}>{Math.floor(label)}</div>
                     {payload
                       .slice()
                       .sort((a: any, b: any) => b.value - a.value)

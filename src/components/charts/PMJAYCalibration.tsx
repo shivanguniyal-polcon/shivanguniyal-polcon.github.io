@@ -80,15 +80,15 @@ export default function PMJAYCalibration() {
       <div style={{ width: '100%', height: 320 }}>
         <ResponsiveContainer>
           <LineChart data={data} margin={{ top: 10, right: 14, left: -14, bottom: 0 }}>
-            <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="t" type="number" domain={[2018.7, 2026]} tickCount={8}
               tickFormatter={fmtYear}
-              stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10, fontFamily: 'JetBrains Mono' }}
-              tickLine={false} axisLine={{ stroke: '#1f2933' }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10, fontFamily: 'JetBrains Mono' }}
+              tickLine={false} axisLine={{ stroke: 'var(--line)' }}
             />
             <YAxis
-              stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
               tickLine={false} axisLine={false}
               tickFormatter={(v: number) => `${v}cr`}
             />
@@ -96,10 +96,10 @@ export default function PMJAYCalibration() {
               content={({ active, payload, label }: any) =>
                 active && payload?.length ? (
                   <div style={{
-                    background: '#0d1117', border: '1px solid #2d3a47', borderRadius: 8,
+                    background: 'var(--code-bg)', border: '1px solid var(--line-bright)', borderRadius: 8,
                     padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
                   }}>
-                    <div style={{ color: '#5c6b7a' }}>{fmtYear(label)}</div>
+                    <div style={{ color: 'var(--ink-faint)' }}>{fmtYear(label)}</div>
                     {payload.map((p: any) => (
                       <div key={p.dataKey} style={{ color: p.stroke }}>
                         {p.dataKey}: {Number(p.value).toFixed(3)} cr
@@ -113,8 +113,8 @@ export default function PMJAYCalibration() {
               wrapperStyle={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11 }}
               formatter={(v: string) => (v === 'model' ? 'model (live)' : 'official anchors')}
             />
-            <Line type="monotone" dataKey="official" stroke="#e8edf2" strokeWidth={0} dot={{ r: 4, fill: '#e8edf2', strokeWidth: 0 }} isAnimationActive={false} />
-            <Line type="monotone" dataKey="model" stroke="#4ade80" strokeWidth={2.4} dot={false} isAnimationActive={false} />
+            <Line type="monotone" dataKey="official" stroke="var(--ink)" strokeWidth={0} dot={{ r: 4, fill: 'var(--ink)', strokeWidth: 0 }} isAnimationActive={false} />
+            <Line type="monotone" dataKey="model" stroke="var(--accent)" strokeWidth={2.4} dot={false} isAnimationActive={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>

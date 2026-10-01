@@ -1,20 +1,22 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, memo } from 'react';
 import { projects } from '../data/projects';
 
+/* domain hues read the palette vars, so day mode darkens every petal,
+   orb, legend chip, and tooltip edge exactly like the charts do */
 const domainColor: Record<string, string> = {
-  'Electoral Systems': '#4ade80',
-  'Health Policy': '#38bdf8',
-  'Defence & Strategic Trade': '#fbbf24',
-  'Climate & Water': '#a78bfa',
-  'Media & Information': '#f472b6',
+  'Electoral Systems': 'var(--accent)',
+  'Health Policy': 'var(--cyan)',
+  'Defence & Strategic Trade': 'var(--amber)',
+  'Climate & Water': 'var(--violet)',
+  'Media & Information': 'var(--pink)',
 };
 
 const domainOrbs = [
-  { name: 'Electoral Systems', color: '#4ade80' },
-  { name: 'Health Policy', color: '#38bdf8' },
-  { name: 'Defence & Strategic Trade', color: '#fbbf24' },
-  { name: 'Climate & Water', color: '#a78bfa' },
-  { name: 'Media & Information', color: '#f472b6' },
+  { name: 'Electoral Systems', color: 'var(--accent)' },
+  { name: 'Health Policy', color: 'var(--cyan)' },
+  { name: 'Defence & Strategic Trade', color: 'var(--amber)' },
+  { name: 'Climate & Water', color: 'var(--violet)' },
+  { name: 'Media & Information', color: 'var(--pink)' },
 ];
 
 type HoverInfo = { title: string; domain: string; color: string; x: number; y: number };
@@ -54,7 +56,8 @@ function Orb({ name, color, i, r }: { name: string; color: string; i: number; r:
         <span className="orb-glyph">
           <span className="orb-spin">
             <span className="orb-correct" style={{ color } as React.CSSProperties}>
-              <span className="orb-dot" style={{ background: color, boxShadow: `0 0 14px ${color}` }} />
+              {/* glow comes from CSS via currentColor, so it tracks the domain and the mode */}
+              <span className="orb-dot" style={{ background: color }} />
               <span className="orb-label">{short}</span>
             </span>
           </span>
@@ -64,21 +67,117 @@ function Orb({ name, color, i, r }: { name: string; color: string; i: number; r:
   );
 }
 
-/* Stylized ministry building at dusk, garden hedge, path, lampposts. */
-function GardenBackdrop() {
+/* Pen-written glyphs for the flag motto: "the best country in the world"
+   written in ink on the white cloth. Each letter is a handful of strokes in
+   a 6x8 cell (baseline at y=8), drawn with rounded pen strokes so the words
+   read as handwriting, not a font. Composed into two lines by flagWords. */
+const PEN = {
+  w: 1.2,
+  ink: '#2b2721',
+};
+
+const GLYPHS: Record<string, { d: string[]; dot?: [number, number] }> = {
+  a: { d: ['M1 4 C 1 2, 4 1, 5 2.5 M1 4 C 1 6, 4 7, 5 5.5', 'M5 2.5 L 5 7'] },
+  b: { d: ['M1 1 L 1 7', 'M1 2.5 C 2.5 2, 5 2.6, 5 4.5 C 5 6.4, 2.5 7, 1 6.5'] },
+  c: { d: ['M5 2.5 C 3.5 1, 1 2, 1 4 C 1 6, 3.5 7, 5 5.5'] },
+  d: { d: ['M5 1 L 5 7', 'M5 2 C 4 1, 1 1.5, 1 3.5 C 1 5.5, 4 6, 5 5'] },
+  e: { d: ['M5 3 C 3 2.5, 1 3, 1 4.5 C 1 6, 3 7, 5 5.5', 'M1 4.5 L 5 4.5'] },
+  f: { d: ['M4 1 C 2.5 1, 2 2, 2 3.5 L 2 7', 'M1 3.5 L 4 3.5'] },
+  g: { d: ['M5 2 L 5 6.5 C 5 7.8, 2 7.8, 1 7', 'M5 2 C 4 1, 1 1.5, 1 3.5 C 1 5.5, 4 6, 5 5'] },
+  h: { d: ['M1 1 L 1 7', 'M1 4 C 2 3, 4 3, 5 4 L 5 7'] },
+  i: { d: ['M1 2 L 1 7'], dot: [1, 0.4] },
+  l: { d: ['M1 1 L 1 7'] },
+  m: { d: ['M1 7 L 1 2.5', 'M1 3 C 1.5 2, 2.5 2, 3 3 L 3 7', 'M3 3 C 3.5 2, 4.5 2, 5 3 L 5 7'] },
+  n: { d: ['M1 7 L 1 2.5', 'M1 3 C 2 2, 4 2, 5 3 L 5 7'] },
+  o: { d: ['M1 4.5 C 1 2.5, 2 1.5, 3 1.5 C 4 1.5, 5 2.5, 5 4.5 C 5 6, 4 7, 3 7 C 2 7, 1 6, 1 4.5'] },
+  r: { d: ['M1 7 L 1 2.5', 'M1 3 C 2 2, 4 2, 4.5 3 C 4.5 4, 3 4, 2 4.5'] },
+  s: { d: ['M5 2.5 C 3.5 1.2, 1.5 1.8, 1.5 3 C 1.5 4.5, 4.5 4, 4.5 5.5 C 4.5 6.8, 2.5 7.2, 1 6'] },
+  t: { d: ['M3 1 L 3 6 C 3 7, 4 7, 5 6.5', 'M1.5 2 L 4.5 2'] },
+  u: { d: ['M1 2 L 1 5 C 1 6.5, 4 7, 5 5.5', 'M5 2 L 5 7'] },
+  v: { d: ['M1 2 L 3 7', 'M5 2 L 3 7'] },
+  w: { d: ['M1 2 L 2 7', 'M3 2 L 2 7', 'M3 2 L 4 7', 'M5 2 L 4 7'] },
+  y: { d: ['M1 2 L 3 5', 'M5 2 L 2.5 7.5'] },
+};
+
+const flagWords: string[][][] = [
+  [['t', 'h', 'e'], ['b', 'e', 's', 't']],
+  [['c', 'o', 'u', 'n', 't', 'r', 'y']],
+  [['i', 'n'], ['t', 'h', 'e']],
+  [['w', 'o', 'r', 'l', 'd']],
+];
+
+/* Lay one line of words out at a given scale and top edge, centered in the
+   cloth width W. The motto fills the same cloth the tricolor occupied:
+   four short lines, slightly tilted, like a real pen wrote them. */
+function FlagLine({ words, y, k, W = 22 }: { words: string[][]; y: number; k: number; W?: number }) {
+  const nGlyphs = words.reduce((n, w) => n + w.length, 0);
+  const lineWidth = (1 + nGlyphs * 7 + (words.length - 1) * 3.5) * k;
+  let x = Math.max(0.5, (W - lineWidth) / 2);
+  return (
+    <g stroke={PEN.ink} strokeWidth={PEN.w * k} strokeLinecap="round" strokeLinejoin="round" fill="none">
+      {words.map((word, wi) =>
+        word.map((ch, ci) => {
+          const gx = x;
+          x += 7 * k;
+          if (ci === word.length - 1) x += 3.5 * k;
+          const g = GLYPHS[ch];
+          if (!g) return null;
+          return (
+            <g key={`${wi}-${ci}`} transform={`translate(${gx} ${y}) scale(${k})`}>
+              {g.d.map((d, di) => (
+                <path key={di} d={d} />
+              ))}
+              {g.dot && <circle cx={g.dot[0]} cy={g.dot[1]} r={0.45} fill={PEN.ink} stroke="none" />}
+            </g>
+          );
+        }),
+      )}
+    </g>
+  );
+}
+
+const FlagMotto = memo(function FlagMotto() {
+  const k = 0.36;
+  const step = 8 * k;
+  /* cloth-local coordinates: the wrapper g translates to the cloth origin */
+  const top = (13.5 - 4 * step) / 2;
+  return (
+    <g transform="translate(721 286) rotate(-1.6 11 6.75)" opacity="0.85">
+      {flagWords.map((words, li) => (
+        <FlagLine key={li} words={words} y={top + li * step} k={k} />
+      ))}
+    </g>
+  );
+});
+
+/* Stylized ministry building at dusk, garden hedge, path, lampposts.
+   Night colors live in the attributes here; every element that changes in
+   day mode carries a class, and global.css does the recoloring under
+   html.mode-day. The moon and the sun share one anchor so the switch
+   crossfades in place. mx/my keep the light visible on narrow screens,
+   where preserveAspectRatio slice would otherwise crop it away. */
+function GardenBackdrop({ mx = 1186, my = 112 }: { mx?: number; my?: number }) {
+  const sunRays = [0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
+    const a = (i * Math.PI) / 4;
+    return { x1: Math.cos(a) * 36, y1: Math.sin(a) * 36, x2: Math.cos(a) * 50, y2: Math.sin(a) * 50 };
+  });
   return (
     <div className="scene-backdrop" aria-hidden="true">
       <svg viewBox="0 0 1440 760" preserveAspectRatio="xMidYMax slice" fill="none">
         <defs>
           <linearGradient id="bd-sky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#0a0e12" />
-            <stop offset="0.62" stopColor="#0c141d" />
-            <stop offset="1" stopColor="#12202b" />
+            <stop className="sky-a" offset="0" stopColor="#0a0e12" />
+            <stop className="sky-b" offset="0.62" stopColor="#0c141d" />
+            <stop className="sky-c" offset="1" stopColor="#12202b" />
           </linearGradient>
           <linearGradient id="bd-dome" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#1a2833" />
-            <stop offset="1" stopColor="#0e1720" />
+            <stop className="dome-a" offset="0" stopColor="#1a2833" />
+            <stop className="dome-b" offset="1" stopColor="#0e1720" />
           </linearGradient>
+          <radialGradient id="bd-sunglow">
+            <stop offset="0" stopColor="#ffe9a4" stopOpacity="0.55" />
+            <stop offset="1" stopColor="#ffe9a4" stopOpacity="0" />
+          </radialGradient>
           <radialGradient id="bd-moonglow">
             <stop offset="0" stopColor="#dfe6ec" stopOpacity="0.22" />
             <stop offset="1" stopColor="#dfe6ec" stopOpacity="0" />
@@ -98,10 +197,21 @@ function GardenBackdrop() {
           />
         ))}
 
-        {/* moon */}
-        <circle cx="1186" cy="112" r="86" fill="url(#bd-moonglow)" />
-        <circle cx="1186" cy="112" r="26" fill="#dfe6ec" opacity="0.85" />
-        <circle cx="1178" cy="106" r="20" fill="#0c141d" opacity="0.55" />
+        {/* moon (night) and sun (day): the garden's light switch */}
+        <g className="bd-moon" transform={`translate(${mx} ${my})`}>
+          <circle r="86" fill="url(#bd-moonglow)" />
+          <circle r="26" fill="#dfe6ec" opacity="0.85" />
+          <circle cx="-8" cy="-6" r="20" fill="#0c141d" opacity="0.55" />
+        </g>
+        <g className="bd-sun" transform={`translate(${mx} ${my})`}>
+          <circle r="86" fill="url(#bd-sunglow)" />
+          <circle r="26" fill="#ffd66e" />
+          <g stroke="#ffd66e" strokeWidth="3.4" strokeLinecap="round" opacity="0.9">
+            {sunRays.map((r, i) => (
+              <line key={i} x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2} />
+            ))}
+          </g>
+        </g>
 
         {/* paper clouds */}
         <g className="cloud" opacity="0.75">
@@ -115,82 +225,116 @@ function GardenBackdrop() {
 
         {/* distant skyline */}
         <path
+          className="bd-skyline"
           d="M0 520 L0 470 L60 470 L60 442 L118 442 L118 486 L176 486 L176 452 L240 452 L240 500 L300 500 L300 460 L364 460 L364 488 L430 488 L430 452 L500 452 L500 496 L940 496 L940 458 L1006 458 L1006 490 L1072 490 L1072 446 L1140 446 L1140 484 L1204 484 L1204 458 L1268 458 L1268 494 L1330 494 L1330 464 L1396 464 L1396 486 L1440 486 L1440 520 Z"
           fill="#0c1218" opacity="0.9"
         />
         {[80, 138, 268, 466, 960, 1092, 1226, 1352].map((x, i) => (
-          <rect key={i} x={x} y={462 + (i % 3) * 8} width="6" height="8" fill="#fbbf24" opacity="0.16" />
+          <rect key={i} className="bd-win" x={x} y={462 + (i % 3) * 8} width="6" height="8" fill="#fbbf24" opacity="0.16" />
         ))}
 
         {/* main ministry building */}
-        <g stroke="#223140" strokeWidth="1">
+        <g className="bld-stroke" stroke="#223140" strokeWidth="1">
           {/* steps */}
-          <rect x="590" y="562" width="260" height="8" fill="#0f1720" />
-          <rect x="578" y="570" width="284" height="8" fill="#101a24" />
-          <rect x="566" y="578" width="308" height="8" fill="#111c26" />
+          <rect className="bd-step1" x="590" y="562" width="260" height="8" fill="#0f1720" />
+          <rect className="bd-step2" x="578" y="570" width="284" height="8" fill="#101a24" />
+          <rect className="bd-step3" x="566" y="578" width="308" height="8" fill="#111c26" />
           {/* wings */}
-          <rect x="452" y="478" width="148" height="84" fill="#0f1922" />
-          <rect x="840" y="478" width="148" height="84" fill="#0f1922" />
+          <rect className="bd-wing" x="452" y="478" width="148" height="84" fill="#0f1922" />
+          <rect className="bd-wing" x="840" y="478" width="148" height="84" fill="#0f1922" />
           {/* main block */}
-          <rect x="600" y="440" width="240" height="122" fill="#101a24" />
+          <rect className="bd-main" x="600" y="440" width="240" height="122" fill="#101a24" />
           {/* columns */}
           {[614, 642, 670, 698, 742, 770, 798, 818].map((x, i) => (
-            <rect key={i} x={x} y={448} width="11" height="106" fill="#15212d" />
+            <rect key={i} className="bd-col" x={x} y={448} width="11" height="106" fill="#15212d" />
           ))}
           {/* entablature + cornice */}
-          <rect x="588" y="424" width="264" height="16" fill="#13202c" />
-          <rect x="580" y="416" width="280" height="8" fill="#16242f" />
+          <rect className="bd-ent" x="588" y="424" width="264" height="16" fill="#13202c" />
+          <rect className="bd-corn" x="580" y="416" width="280" height="8" fill="#16242f" />
           {/* drum + dome */}
-          <rect x="692" y="380" width="56" height="38" fill="#111c26" />
+          <rect className="bd-drum" x="692" y="380" width="56" height="38" fill="#111c26" />
           <path d="M672 380 A 48 48 0 0 1 768 380 Z" fill="url(#bd-dome)" />
-          <line x1="720" y1="332" x2="720" y2="318" stroke="#2d3a47" />
+          <line className="bd-pole" x1="720" y1="332" x2="720" y2="318" stroke="#2d3a47" />
           <circle cx="720" cy="315" r="3" fill="#223140" />
         </g>
-        {/* flag */}
+        {/* flag: white cloth, motto written in pen */}
         <g className="flag-wave">
-          <rect x="721" y="286" width="22" height="4.5" fill="#f97316" opacity="0.7" />
-          <rect x="721" y="290.5" width="22" height="4.5" fill="#e8edf2" opacity="0.75" />
-          <rect x="721" y="295" width="22" height="4.5" fill="#4ade80" opacity="0.7" />
+          <rect x="721" y="286" width="22" height="13.5" fill="#e9edf1" opacity="0.92" />
+          <rect x="721" y="286" width="22" height="13.5" fill="none" stroke="#8fa0ae" strokeWidth="0.4" opacity="0.5" />
+          <FlagMotto />
         </g>
-        <line x1="720" y1="286" x2="720" y2="318" stroke="#2d3a47" strokeWidth="1.4" />
-        {/* lit windows */}
+        <line className="bd-pole" x1="720" y1="286" x2="720" y2="318" stroke="#2d3a47" strokeWidth="1.4" />
+        {/* lit windows: lamps of the night, shut down by day */}
         {[[470, 494], [500, 494], [560, 494], [880, 494], [910, 494], [946, 494]].map(([x, y], i) => (
-          <rect key={i} x={x} y={y} width="12" height="14" fill="#fbbf24" opacity="0.13" />
+          <rect key={i} className="bd-win" x={x} y={y} width="12" height="14" fill="#fbbf24" opacity="0.13" />
         ))}
         {[[476, 522], [552, 522], [886, 522], [938, 522]].map(([x, y], i) => (
-          <rect key={i} x={x} y={y} width="12" height="14" fill="#fbbf24" opacity="0.09" />
+          <rect key={i} className="bd-win" x={x} y={y} width="12" height="14" fill="#fbbf24" opacity="0.09" />
         ))}
 
         {/* garden hedges */}
-        <g fill="#0d1713">
-          <ellipse cx="150" cy="600" rx="170" ry="30" />
-          <ellipse cx="420" cy="592" rx="150" ry="26" fill="#0f1a15" />
-          <ellipse cx="1050" cy="592" rx="160" ry="27" />
-          <ellipse cx="1310" cy="600" rx="160" ry="30" fill="#0f1a15" />
-          <ellipse cx="260" cy="586" rx="26" ry="20" fill="#112018" />
-          <ellipse cx="1190" cy="586" rx="26" ry="20" fill="#112018" />
+        <g>
+          <ellipse className="bd-hedge" cx="150" cy="600" rx="170" ry="30" fill="#0d1713" />
+          <ellipse className="bd-hedge alt" cx="420" cy="592" rx="150" ry="26" fill="#0f1a15" />
+          <ellipse className="bd-hedge" cx="1050" cy="592" rx="160" ry="27" fill="#0d1713" />
+          <ellipse className="bd-hedge alt" cx="1310" cy="600" rx="160" ry="30" fill="#0f1a15" />
+          <ellipse className="bd-hedge deep" cx="260" cy="586" rx="26" ry="20" fill="#112018" />
+          <ellipse className="bd-hedge deep" cx="1190" cy="586" rx="26" ry="20" fill="#112018" />
         </g>
 
         {/* path from the steps to the viewer */}
-        <path d="M660 586 L780 586 L980 760 L460 760 Z" fill="#121b25" opacity="0.9" />
+        <path className="bd-path" d="M660 586 L780 586 L980 760 L460 760 Z" fill="#121b25" opacity="0.9" />
         {/* paper scraps on the path */}
-        <rect x="640" y="690" width="14" height="10" fill="#dfe6ec" opacity="0.1" transform="rotate(-14 647 695)" />
-        <rect x="780" y="720" width="12" height="9" fill="#dfe6ec" opacity="0.12" transform="rotate(9 786 724)" />
-        <rect x="720" y="662" width="10" height="8" fill="#dfe6ec" opacity="0.09" transform="rotate(-5 725 666)" />
+        <rect className="bd-scraps" x="640" y="690" width="14" height="10" fill="#dfe6ec" opacity="0.1" transform="rotate(-14 647 695)" />
+        <rect className="bd-scraps" x="780" y="720" width="12" height="9" fill="#dfe6ec" opacity="0.12" transform="rotate(9 786 724)" />
+        <rect className="bd-scraps" x="720" y="662" width="10" height="8" fill="#dfe6ec" opacity="0.09" transform="rotate(-5 725 666)" />
 
         {/* lampposts */}
         <g>
-          <line x1="470" y1="512" x2="470" y2="600" stroke="#1f2933" strokeWidth="3" />
+          <line className="bd-lamppost" x1="470" y1="512" x2="470" y2="600" stroke="#1f2933" strokeWidth="3" />
           <path d="M470 498 L480 512 L470 526 L460 512 Z" fill="#fbbf24" opacity="0.8" />
           <circle cx="470" cy="512" r="26" fill="url(#bd-lamp)" className="lamp-glow" />
-          <line x1="970" y1="512" x2="970" y2="600" stroke="#1f2933" strokeWidth="3" />
+          <line className="bd-lamppost" x1="970" y1="512" x2="970" y2="600" stroke="#1f2933" strokeWidth="3" />
           <path d="M970 498 L980 512 L970 526 L960 512 Z" fill="#fbbf24" opacity="0.8" />
           <circle cx="970" cy="512" r="26" fill="url(#bd-lamp)" className="lamp-glow" />
         </g>
 
+        {/* parked cars in front of the ministry: dark silhouettes at night,
+            colored bodies once the sun is up. They sit clear of the walkway
+            that opens from the steps. */}
+        <g>
+          <g className="car-a" transform="translate(474 604)">
+            <path className="car-body" d="M2 26 L6 14 Q8 8 16 8 L30 8 Q36 2 46 2 L62 2 Q72 2 78 8 L92 8 Q100 8 102 16 L104 26 Q104 30 98 30 L8 30 Q2 30 2 26 Z" />
+            <rect className="car-glass" x="34" y="10" width="15" height="9" rx="2" />
+            <rect className="car-glass" x="53" y="10" width="15" height="9" rx="2" />
+            <circle className="car-wheel" cx="24" cy="30" r="7" />
+            <circle className="car-hub" cx="24" cy="30" r="2.6" />
+            <circle className="car-wheel" cx="82" cy="30" r="7" />
+            <circle className="car-hub" cx="82" cy="30" r="2.6" />
+          </g>
+          <g className="car-b" transform="translate(842 606)">
+            <path className="car-body" d="M2 24 L5 13 Q7 8 14 8 L26 8 Q31 3 40 3 L54 3 Q63 3 68 8 L80 8 Q87 8 89 14 L91 24 Q91 28 85 28 L8 28 Q2 28 2 24 Z" />
+            <rect className="car-glass" x="29" y="10" width="13" height="8" rx="2" />
+            <rect className="car-glass" x="46" y="10" width="13" height="8" rx="2" />
+            <circle className="car-wheel" cx="21" cy="28" r="6.4" />
+            <circle className="car-hub" cx="21" cy="28" r="2.4" />
+            <circle className="car-wheel" cx="72" cy="28" r="6.4" />
+            <circle className="car-hub" cx="72" cy="28" r="2.4" />
+          </g>
+          <g className="car-c" transform="translate(966 618)">
+            <path className="car-body" d="M2 27 L6 14 Q8 8 16 8 L28 8 Q33 2 43 2 L66 2 Q76 2 82 8 L94 8 Q102 8 104 15 L106 27 Q106 31 100 31 L8 31 Q2 31 2 27 Z" />
+            <rect className="car-glass" x="31" y="10" width="16" height="9" rx="2" />
+            <rect className="car-glass" x="52" y="10" width="16" height="9" rx="2" />
+            <circle className="car-wheel" cx="24" cy="31" r="7.2" />
+            <circle className="car-hub" cx="24" cy="31" r="2.7" />
+            <circle className="car-wheel" cx="84" cy="31" r="7.2" />
+            <circle className="car-hub" cx="84" cy="31" r="2.7" />
+          </g>
+        </g>
+
         {/* foreground grass */}
-        <rect y="726" width="1440" height="34" fill="#0c1512" />
-        <g stroke="#142019" strokeWidth="2">
+        <rect className="bd-grass" y="726" width="1440" height="34" fill="#0c1512" />
+        <g className="bd-blade" stroke="#142019" strokeWidth="2">
           <path d="M120 760 C 122 748, 118 742, 122 734" />
           <path d="M148 760 C 150 750, 146 744, 150 738" />
           <path d="M360 760 C 362 750, 358 744, 362 736" />
@@ -274,6 +418,7 @@ export default function GardenScene() {
   const [bloomY, setBloomY] = useState(40);
   const [orbitR, setOrbitR] = useState(250);
   const [dragging, setDragging] = useState(false);
+  const [moon, setMoon] = useState<{ x: number; y: number; px: number; py: number } | null>(null);
 
   const stageRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
@@ -314,6 +459,22 @@ export default function GardenScene() {
         const by = hr.top + hr.height / 2 - (sr.top + sr.height / 2) - 40;
         setBud({ x: bx, y: by });
       }
+      /* keep the light switch inside the visible slice of the sky on every
+         aspect ratio: on narrow portrait screens a fixed moon would be
+         cropped away by the backdrop's preserveAspectRatio slice */
+      const ar = w / h;
+      const sa = 1440 / 760;
+      const scale = ar >= sa ? w / 1440 : h / 760;
+      const vx0 = ar >= sa ? 0 : 720 - w / scale / 2;
+      const vy0 = ar >= sa ? 760 - h / scale : 0;
+      const mxv = Math.min(1345, vx0 + w / scale - 112);
+      const myv = vy0 + 124;
+      setMoon({
+        x: Math.round(mxv),
+        y: Math.round(myv),
+        px: Math.round((mxv - vx0) * scale),
+        py: Math.round((myv - vy0) * scale),
+      });
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -381,6 +542,19 @@ export default function GardenScene() {
     });
   };
 
+  /* the moon is the site's light switch: it flips the class on <html>
+     (which every page's palette reads) and remembers the choice */
+  const toggleMode = () => {
+    const root = document.documentElement;
+    const next = !root.classList.contains('mode-day');
+    root.classList.toggle('mode-day', next);
+    try {
+      localStorage.setItem('garden-mode', next ? 'day' : 'night');
+    } catch {
+      /* storage unavailable: the mode just does not persist */
+    }
+  };
+
   /* fold the open lotus back into the bud in the gardener's hands */
   const fold = () => {
     const f = flowerRef.current;
@@ -398,6 +572,8 @@ export default function GardenScene() {
     if (phase !== 'bloom' || reduced.current) return;
     /* pressing the fold control is not a drag */
     if ((e.target as HTMLElement).closest('.lotus-core')) return;
+    /* pressing the light switch is not a drag either */
+    if ((e.target as HTMLElement).closest('.moon-toggle')) return;
     const d = drag.current;
     d.on = true;
     d.moved = 0;
@@ -483,7 +659,21 @@ export default function GardenScene() {
       onMouseLeave={() => setHover(null)}
     >
       <div className="scene-tilt" ref={tiltRef}>
-        <GardenBackdrop />
+        <GardenBackdrop mx={moon?.x ?? 1186} my={moon?.y ?? 112} />
+
+        {/* the light switch: a transparent hit circle riding the moon/sun.
+            It sits inside the tilt so it tracks the painted sky, and above
+            the scrim so the garden can be lit even while the lotus is open. */}
+        {moon && (
+          <button
+            type="button"
+            className="moon-toggle"
+            style={{ left: moon.px, top: moon.py }}
+            onClick={toggleMode}
+            aria-label="Switch between night and day"
+            title="night / day"
+          />
+        )}
 
         <div className="scene-fig" aria-hidden="true">
           <PaperFigure />

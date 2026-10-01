@@ -66,26 +66,26 @@ export default function MineralsPolicyToggle() {
           onChange={(e) => setThreshold(parseFloat(e.target.value))}
           style={{ width: 260 }}
         />
-        <span className="readout" style={{ color: '#fbbf24' }}>
+        <span className="readout" style={{ color: 'var(--amber)' }}>
           threshold {threshold.toFixed(2)}
         </span>
       </div>
 
       <div className="toggle-row" style={{ gap: 28, margin: '10px 0 16px' }}>
-        <span className="readout" style={{ color: '#4ade80' }}>recall {recall.toFixed(0)}%</span>
-        <span className="readout" style={{ color: '#f87171' }}>false alarms {far.toFixed(0)}%</span>
-        <span className="readout" style={{ color: '#38bdf8' }}>alerts/yr {alerts}</span>
+        <span className="readout" style={{ color: 'var(--accent)' }}>recall {recall.toFixed(0)}%</span>
+        <span className="readout" style={{ color: 'var(--red)' }}>false alarms {far.toFixed(0)}%</span>
+        <span className="readout" style={{ color: 'var(--cyan)' }}>alerts/yr {alerts}</span>
       </div>
 
       <div style={{ width: '100%', height: 300 }}>
         <ResponsiveContainer>
           <ScatterChart margin={{ top: 10, right: 16, left: -8, bottom: 10 }}>
-            <CartesianGrid stroke="#1f2933" strokeDasharray="3 3" />
+            <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" />
             <XAxis
               type="number" dataKey="score" domain={[0, 1]} name="risk score"
-              stroke="#5c6b7a" tick={{ fill: '#5c6b7a', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
-              tickLine={false} axisLine={{ stroke: '#1f2933' }}
-              label={{ value: 'model risk score', position: 'insideBottom', offset: -6, fill: '#5c6b7a', fontSize: 11 }}
+              stroke="var(--ink-faint)" tick={{ fill: 'var(--ink-faint)', fontSize: 10.5, fontFamily: 'JetBrains Mono' }}
+              tickLine={false} axisLine={{ stroke: 'var(--line)' }}
+              label={{ value: 'model risk score', position: 'insideBottom', offset: -6, fill: 'var(--ink-faint)', fontSize: 11 }}
             />
             <YAxis type="number" dataKey="size" hide domain={[0, 300]} />
             <ZAxis type="number" dataKey="size" range={[30, 260]} />
@@ -93,11 +93,11 @@ export default function MineralsPolicyToggle() {
               content={({ active, payload }: any) =>
                 active && payload?.length ? (
                   <div style={{
-                    background: '#0d1117', border: '1px solid #2d3a47', borderRadius: 8,
+                    background: 'var(--code-bg)', border: '1px solid var(--line-bright)', borderRadius: 8,
                     padding: '8px 12px', fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
                   }}>
-                    <div style={{ color: '#e8edf2' }}>{payload[0].payload.name}</div>
-                    <div style={{ color: payload[0].payload.disrupted ? '#f87171' : '#9aa7b4' }}>
+                    <div style={{ color: 'var(--ink)' }}>{payload[0].payload.name}</div>
+                    <div style={{ color: payload[0].payload.disrupted ? 'var(--red)' : 'var(--ink-dim)' }}>
                       {payload[0].payload.disrupted ? '● disrupted' : '○ quiet'}
                       {' · score '}{payload[0].payload.score.toFixed(2)}
                     </div>
@@ -106,12 +106,12 @@ export default function MineralsPolicyToggle() {
               }
             />
             {/* alert zone */}
-            <ReferenceArea x1={threshold} x2={1} fill="#4ade80" fillOpacity={0.05} stroke="#4ade80" strokeOpacity={0.25} strokeDasharray="4 4" />
+            <ReferenceArea x1={threshold} x2={1} fill="var(--accent)" fillOpacity={0.05} stroke="var(--accent)" strokeOpacity={0.25} strokeDasharray="4 4" />
             {/* miss zone (disruptions below threshold) */}
-            <ReferenceArea x1={0} x2={threshold} fill="#f87171" fillOpacity={0.03} />
-            <Scatter data={dyads.filter((d) => !d.disrupted)} fill="#3a4a5a" fillOpacity={0.75} />
-            <Scatter data={dyads.filter((d) => d.disrupted && d.score >= threshold)} fill="#4ade80" fillOpacity={0.9} />
-            <Scatter data={dyads.filter((d) => d.disrupted && d.score < threshold)} fill="#f87171" fillOpacity={0.9} />
+            <ReferenceArea x1={0} x2={threshold} fill="var(--red)" fillOpacity={0.03} />
+            <Scatter data={dyads.filter((d) => !d.disrupted)} fill="var(--data-muted)" fillOpacity={0.75} />
+            <Scatter data={dyads.filter((d) => d.disrupted && d.score >= threshold)} fill="var(--accent)" fillOpacity={0.9} />
+            <Scatter data={dyads.filter((d) => d.disrupted && d.score < threshold)} fill="var(--red)" fillOpacity={0.9} />
           </ScatterChart>
         </ResponsiveContainer>
       </div>
@@ -119,7 +119,7 @@ export default function MineralsPolicyToggle() {
       <div className="data-note">
         green = disruption caught · red = disruption missed · gray = quiet dyad.
         Slide right for a quiet life and strategic exposure; slide left for a loud alarm and a full warehouse.
-        Reserve sizing from this frontier: <strong style={{ color: '#e8edf2' }}>$633M CapEx / $910M lifecycle</strong> under VaR.
+        Reserve sizing from this frontier: <strong style={{ color: 'var(--ink)' }}>$633M CapEx / $910M lifecycle</strong> under VaR.
       </div>
     </div>
   );
