@@ -57,6 +57,14 @@
       "build": "A reusable methods library: datasets, cleaning steps, and model designs documented well enough for the next team to pick up in a day.",
       "proof": null
     },
+    {
+      "tag": "urban ai",
+      "color": "#a78bfa",
+      "status": "sprouting",
+      "problem": "Who governs a city's data and AI **before supplier contracts fix the rules**?",
+      "build": "Five policy instruments for India's digital cities, from a Digital City Charter to a digital-twin impact assessment. Full report with sources: [digital cities: governance before lock-in →](/brainstorm/digital-cities/)",
+      "proof": null
+    },
     null,
     null
   ]

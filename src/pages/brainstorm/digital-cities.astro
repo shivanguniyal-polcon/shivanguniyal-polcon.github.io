@@ -1,0 +1,129 @@
+---
+import { marked } from 'marked';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import report from '../../data/digital-cities-report.md?raw';
+
+/* the report lives as a .md file in src/data and renders through marked,
+   the same engine the brainstorm bench uses for its cards. the sources
+   table is the last section of the md, so it lands at the end of the page. */
+const html = marked.parse(report, { async: false }) as string;
+---
+
+<BaseLayout
+  title="Digital Cities: Governance Before Lock-In · Shivang Uniyal"
+  description="A research report on governing India's digital cities: definition, literature, gaps, research questions, threats, five policy instruments, and a testable twelve-month pilot. October 2026."
+>
+  <section style="padding-top:72px">
+    <div class="wrap-tight">
+      <a href="/brainstorm/" class="backlink">← cd ../brainstorm</a>
+
+      <div class="kicker">brainstorm // digital_cities</div>
+      <h1 style="font-size:clamp(32px,4.6vw,48px)">Digital Cities: Governance Before Lock-In</h1>
+      <p class="lede" style="margin-top:16px; font-size:18px">
+        The full research report: what a digital city is, what the literature leaves
+        open, the questions this work asks, the threats, five policy instruments, and
+        one pilot that can test them. Written in simplified technical English (STE100),
+        with the sources table at the end.
+      </p>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:22px">
+        <span class="chip accent-chip">research report</span>
+        <span class="chip accent-chip">urban ai governance</span>
+        <span class="chip accent-chip">ste100</span>
+      </div>
+
+      <div class="mono faint" style="margin-top:18px; font-size:12.5px">
+        report · october 2026 · 9 sections + 52 sources
+      </div>
+
+      <div class="prose dc-report" set:html={html} />
+
+      <div class="data-note" style="margin-top:36px">
+        method: definition first, diagnosis second, pilot last. every load-bearing
+        source carries a verification tier: v = checked at the publisher, s =
+        standard attribution, c = canonical, check the pages.
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* set:html children carry no scope attribute, so page styles are global
+     but namespaced under .dc-report (same pattern as brainstorm's svg rules) */
+  .dc-report :global(p) {
+    margin: 14px 0;
+  }
+  .dc-report :global(ul),
+  .dc-report :global(ol) {
+    margin: 14px 0;
+    padding-left: 22px;
+  }
+  .dc-report :global(li) {
+    margin: 7px 0;
+  }
+  .dc-report :global(li)::marker {
+    color: var(--accent);
+  }
+  .dc-report :global(blockquote) {
+    margin: 22px 0;
+    padding: 16px 20px;
+    border-left: 2px solid var(--accent);
+    background: var(--bg-raised);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .dc-report :global(blockquote p) {
+    margin: 6px 0;
+    color: var(--ink-dim);
+  }
+  .dc-report :global(strong) {
+    color: var(--ink);
+  }
+  .dc-report :global(a) {
+    color: var(--accent);
+  }
+  /* sources table: mono header, hairline rows, same frame as data cards */
+  .dc-report :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 22px 0;
+    font-size: 13px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .dc-report :global(th) {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--ink-faint);
+    background: var(--bg-raised);
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--line-bright);
+  }
+  .dc-report :global(td) {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-dim);
+    vertical-align: top;
+  }
+  .dc-report :global(tr:last-child td) {
+    border-bottom: none;
+  }
+  .dc-report :global(td:nth-child(1)),
+  .dc-report :global(td:nth-child(3)) {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .dc-report :global(td:nth-child(3)) {
+    color: var(--accent);
+  }
+  @media (max-width: 720px) {
+    .dc-report :global(table) {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+</style>
